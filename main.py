@@ -4,6 +4,8 @@ import ply.lex as lex
 tokens = ['TURN', 'TURNAFTERCOMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE', 'DESCRIPTION',
           'GRADE', 'CASTLING']
 
+#TODO Test with some unit tests those regex
+
 # Regular expression rules for simple tokens
 t_TURN = r'[1-9][0-9]*\.'
 t_TURNAFTERCOMMENT = r'[1-9][0-9]*\.{3}'
@@ -17,23 +19,14 @@ t_DESCRIPTION = r'^\[[a-zA-Z0-9_]*\s\".*\"\]\n'
 t_GRADE = r'[\?|\!]'
 t_CASTLING = r'O\-O(\-O)?'
 
-
-# A regular expression rule with some action code
-def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
+# A string containing ignored characters (spaces and tabs)
+t_ignore = ' \t'
 
 
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-
-
-# A string containing ignored characters (spaces and tabs)
-t_ignore = ' \t'
-
 
 # Error handling rule
 def t_error(t):
@@ -44,14 +37,31 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-# feeds a string into the lexer
-lexer.input("x = 3 * 4 + 5 * 6")
-while True:
+#Load the input files
+filenames = ['inputs/input1.txt','inputs/input2.txt']
+inputs = []
 
-    # returns the next token or none.
-    tok = lexer.token()
+for file in filenames:
+    with open(file,'r') as data:
+        inputs.append(data.read())
 
-    if not tok:
-        break
+for index, currentInput in enumerate(inputs):
 
-    # Use token
+    # Printing the name of the file that is tested
+    print("Current file tested : ", filenames[index])
+
+    #TODO add a way to check if an error occurred for the file, to print file valid or not
+
+    # Feeds a file into the lexer
+    lexer.input(currentInput)
+    while True:
+
+        # Returns the next token or none.
+        tok = lexer.token()
+
+        # If end of file, we break the infinite loop
+        if not tok:
+            break
+
+        # Use token
+        # TODO Add code here
