@@ -1,17 +1,21 @@
 import ply.lex as lex
 
 # List of token names.
-tokens = ['NAME', 'NUMBER', 'PLUS', 'MINUS',
-          'TIMES', 'DIVIDE', 'LPAREN', 'RPAREN']
+tokens = ['TURN', 'TURNAFTERCOMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE', 'DESCRIPTION',
+          'GRADE', 'CASTLING']
 
 # Regular expression rules for simple tokens
-t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
+t_TURN = r'[1-9][0-9]*\.'
+t_TURNAFTERCOMMENT = r'[1-9][0-9]*\.{3}'
+t_PIECE = r'[P|N|B|R|Q|K]'
+t_MOVE = r'[a-h]?[1-8]?[x]?[a-h][1-8]'
+t_RESULT = r'1\-0|0\-1|1\/2\-1\/2'
+t_COMMENT = r'\{.*\}|\(.*\)'
+t_CHECK = r'[+]'
+t_CHECKMATE = r'[+][+]'
+t_DESCRIPTION = r'^\[[a-zA-Z0-9_]*\s\".*\"\]\n'
+t_GRADE = r'[\?|\!]'
+t_CASTLING = r'O\-O(\-O)?'
 
 
 # A regular expression rule with some action code
