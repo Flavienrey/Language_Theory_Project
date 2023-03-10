@@ -1,12 +1,12 @@
 import ply.lex as lex
 
 # List of token names.
-tokens = ['TURN', 'TURNAFTERCOMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE', 'DESCRIPTION',
-          'GRADE', 'CASTLING']
+tokens = ['TURN', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE', 'DESCRIPTION',
+          'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT']
 
 # Regular expression rules for simple tokens
 t_TURN = r'[1-9][0-9]*\.'
-t_TURNAFTERCOMMENT = r'[1-9][0-9]*\.{3}'
+t_TURN_AFTER_COMMENT = r'[1-9][0-9]*\.{3}'
 t_PIECE = r'[P|N|B|R|Q|K]'
 t_MOVE = r'[a-h]?[1-8]?[x]?[a-h][1-8]'
 t_RESULT = r'1\-0|0\-1|1\/2\-1\/2'
@@ -17,9 +17,11 @@ t_DESCRIPTION = r'^\[[a-zA-Z0-9_]*\s\".*\"\]\n'
 t_GRADE = r'[\?|\!]'
 t_CASTLING = r'O\-O(\-O)?'
 
+# A Comment that should be ignored
+t_IGNORE_FILE_COMMENT = r'\#.*'
+
 # A string containing ignored characters (spaces and tabs)
 t_ignore = ' \t'
-
 
 # Define a rule so we can track line numbers
 def t_newline(t):
