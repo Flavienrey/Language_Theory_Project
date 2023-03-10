@@ -1,5 +1,5 @@
 import unittest
-import main
+from main import ChessLexer
 
 """ Unit tests class"""
 class TestLexer(unittest.TestCase):
@@ -20,25 +20,37 @@ class TestLexer(unittest.TestCase):
 
 
     def testComment1(self):
-        main.lexer.input('[Nzscf5qWgtgNVX "56BnnQIeAhy"]')
-        token = main.lexer.token()
+        lexer = ChessLexer()
 
+        comment = '[Nzscf5qWgtgNVX "56BnnQIeAhy"]'
+        lexer.input(comment)
+        token = lexer.token()
+
+        self.assertIsNotNone(token)
         self.assertEqual(token.type, "COMMENT")
-        self.assertEqual(token.value, '[Nzscf5qWgtgNVX "56BnnQIeAhy"]')
+        self.assertEqual(token.value, comment)
 
     def testComment2(self):
-        main.lexer.input('[test "crazy"]')
-        token = main.lexer.token()
+        lexer = ChessLexer()
 
+        comment ='[test "crazy"]'
+        lexer.input(comment)
+        token = lexer.token()
+
+        self.assertIsNotNone(token)
         self.assertEqual(token.type, "COMMENT")
-        self.assertEqual(token.value, '[Nzscf5qWgtgNVX "56BnnQIeAhy"]')
+        self.assertEqual(token.value, comment)
 
     def testMove1(self):
-        main.lexer.input("e4")
-        token = main.lexer.token()
+        lexer = ChessLexer()
 
+        move = "e4"
+        lexer.input(move)
+        token = lexer.token()
+
+        self.assertIsNotNone(token)
         self.assertEqual(token.type, "MOVE")
-        self.assertEqual(token.value, "e4")
+        self.assertEqual(token.value, move)
 
 
 # Launch all test units

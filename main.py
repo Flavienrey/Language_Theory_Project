@@ -1,48 +1,71 @@
 import ply.lex as lex
 
-# List of token names.
-tokens = ['TURN', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE', 'DESCRIPTION',
-          'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT']
+class ChessLexer(object):
 
-# Regular expression rules for simple tokens
-t_TURN = r'[1-9][0-9]*\.'
-t_TURN_AFTER_COMMENT = r'[1-9][0-9]*\.{3}'
-t_PIECE = r'[P|N|B|R|Q|K]'
-t_MOVE = r'[a-h]?[1-8]?[x]?[a-h][1-8]'
-t_RESULT = r'1\-0|0\-1|1\/2\-1\/2'
-t_COMMENT = r'\{.*\}|\(.*\)'
-t_CHECK = r'[+]'
-t_CHECKMATE = r'[+][+]'
-t_DESCRIPTION = r'^\[[a-zA-Z0-9_]*\s\".*\"\]\n'
-t_GRADE = r'[\?|\!]'
-t_CASTLING = r'O\-O(\-O)?'
+    # List of token names.
+    tokens = ['TURN', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE', 'DESCRIPTION',
+              'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT']
 
-# A Comment that should be ignored
-t_IGNORE_FILE_COMMENT = r'\#.*'
+    # Regular expression rules for simple tokens
+    t_TURN = r'[1-9][0-9]*\.'
+    t_TURN_AFTER_COMMENT = r'[1-9][0-9]*\.{3}'
+    t_PIECE = r'[P|N|B|R|Q|K]'
+    t_MOVE = r'[a-h]?[1-8]?[x]?[a-h][1-8]'
+    t_RESULT = r'1\-0|0\-1|1\/2\-1\/2'
+    t_COMMENT = r'\{.*\}|\(.*\)'
+    t_CHECK = r'[+]'
+    t_CHECKMATE = r'[+][+]'
+    t_DESCRIPTION = r'^\[[a-zA-Z0-9_]*\s\".*\"\]\n'
+    t_GRADE = r'[\?|\!]'
+    t_CASTLING = r'O\-O(\-O)?'
 
-# A string containing ignored characters (spaces and tabs)
-t_ignore = ' \t'
+    # A Comment that should be ignored
+    t_IGNORE_FILE_COMMENT = r'\#.*'
 
-# Define a rule so we can track line numbers
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
+    # A string containing ignored characters (spaces and tabs)
+    t_ignore = ' \t'
 
-# Error handling rule
-def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
+    # Define a rule so we can track line numbers
+    def t_newline(self, t):
+        r'\n+'
+        t.lexer.lineno += len(t.value)
+
+    # Error handling rule
+    def t_error(self, t):
+        print("Illegal character '%s'" % t.value[0])
+        t.lexer.skip(1)
 
 
-# Build the lexer
-lexer = lex.lex()
+    # Instantiate the class and build the lexer
+    def __init__(self):
+        self.lexer = lex.lex(object=self)
+
+
+    # Feeds the text into the lexer
+    def input(self, text):
+        self.lexer.input(text)
+
+
+    # Returns the next token in the lexer
+    def token(self):
+        return self.lexer.token()
+
+
+    # Test the input
+    def test(self, text):
+        self.input(text)
+
+        for current_token in self.lexer:
+            print(current_token)
 
 
 #TODO add a way to check if an error occurred for the file, to print file valid or not
-# Launch all test units
 if __name__ == '__main__':
 
     inputs = []
+
+    # Instantiate and Build the lexer
+    lexer = ChessLexer()
 
     #Load the input files
     filenames = ['inputs/input1.txt','inputs/input2.txt']
@@ -55,10 +78,6 @@ if __name__ == '__main__':
 
         print("=== [Current file tested] === ", filenames[index])
 
-        # Feeds a file into the lexer
-        lexer.input(currentInput)
-
-        for tok in lexer:
-            print(tok)
+        lexer.test(currentInput)
 
         print("--- [End of file] ---\n")
