@@ -53,10 +53,12 @@ if __name__ == '__main__':
 
     for index, currentInput in enumerate(inputs):
 
-        print("Current file tested : ", filenames[index])
+        print("=== [Current file tested] === ", filenames[index])
 
         # Feeds a file into the lexer
         lexer.input(currentInput)
 
         for tok in lexer:
             print(tok)
+
+        print("--- [End of file] ---\n")
