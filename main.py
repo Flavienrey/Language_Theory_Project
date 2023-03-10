@@ -4,8 +4,6 @@ import ply.lex as lex
 tokens = ['TURN', 'TURNAFTERCOMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE', 'DESCRIPTION',
           'GRADE', 'CASTLING']
 
-#TODO Test with some unit tests those regex
-
 # Regular expression rules for simple tokens
 t_TURN = r'[1-9][0-9]*\.'
 t_TURNAFTERCOMMENT = r'[1-9][0-9]*\.{3}'
@@ -37,31 +35,26 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-#Load the input files
-filenames = ['inputs/input1.txt','inputs/input2.txt']
-inputs = []
 
-for file in filenames:
-    with open(file,'r') as data:
-        inputs.append(data.read())
+#TODO add a way to check if an error occurred for the file, to print file valid or not
+# Launch all test units
+if __name__ == '__main__':
 
-for index, currentInput in enumerate(inputs):
+    inputs = []
 
-    # Printing the name of the file that is tested
-    print("Current file tested : ", filenames[index])
+    #Load the input files
+    filenames = ['inputs/input1.txt','inputs/input2.txt']
 
-    #TODO add a way to check if an error occurred for the file, to print file valid or not
+    for file in filenames:
+        with open(file,'r') as data:
+            inputs.append(data.read())
 
-    # Feeds a file into the lexer
-    lexer.input(currentInput)
-    while True:
+    for index, currentInput in enumerate(inputs):
 
-        # Returns the next token or none.
-        tok = lexer.token()
+        print("Current file tested : ", filenames[index])
 
-        # If end of file, we break the infinite loop
-        if not tok:
-            break
+        # Feeds a file into the lexer
+        lexer.input(currentInput)
 
-        # Use token
-        # TODO Add code here
+        for tok in lexer:
+            print(tok)
