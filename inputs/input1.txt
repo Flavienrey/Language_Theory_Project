@@ -1,4 +1,4 @@
-[joueur a "magnus"]
+[joueura "magnus"]
 
 # A ignorer e4
 

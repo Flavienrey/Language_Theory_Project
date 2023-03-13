@@ -18,27 +18,27 @@ class TestLexer(unittest.TestCase):
     #'GRADE',
     #'CASTLING']
 
-    def testComment1(self):
+    def testDescription1(self):
         lexer = ChessLexer()
 
-        comment = '[Nzscf5qWgtgNVX "56BnnQIeAhy"]'
-        lexer.input(comment)
+        description = '[Nzscf5qWgtgNVX "56BnnQIeAhy"]'
+        lexer.input(description)
         token = lexer.token()
 
         self.assertIsNotNone(token)
-        self.assertEqual(token.type, "COMMENT")
-        self.assertEqual(token.value, comment)
+        self.assertEqual(token.type, "DESCRIPTION")
+        self.assertEqual(token.value, description)
 
-    def testComment2(self):
+    def testDescription2(self):
         lexer = ChessLexer()
 
-        comment ='[test "crazy"]'
-        lexer.input(comment)
+        description ='[test "crazy"]'
+        lexer.input(description)
         token = lexer.token()
 
         self.assertIsNotNone(token)
-        self.assertEqual(token.type, "COMMENT")
-        self.assertEqual(token.value, comment)
+        self.assertEqual(token.type, "DESCRIPTION")
+        self.assertEqual(token.value, description)
 
     def testMove1(self):
         lexer = ChessLexer()

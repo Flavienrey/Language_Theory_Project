@@ -15,7 +15,7 @@ class ChessLexer(object):
     t_COMMENT = r'\{.*\}|\(.*\)'
     t_CHECK = r'[+]'
     t_CHECKMATE = r'[+][+]'
-    t_DESCRIPTION = r'^\[[a-zA-Z0-9_]*\s\".*\"\]'
+    t_DESCRIPTION = r'\[[a-zA-Z0-9_]*\s\".*\"\]'
     t_GRADE = r'[\?|\!]'
     t_CASTLING = r'O\-O(\-O)?'
 
