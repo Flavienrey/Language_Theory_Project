@@ -7,7 +7,7 @@ class TestLexer(unittest.TestCase):
     #TODO add more unit tests to test all cases
 
     #['TURN',
-    # 'TURNAFTERCOMMENT',
+    # 'TURN_AFTER_COMMENT',
     # 'PIECE',
     # 'MOVE',
     # 'RESULT',
@@ -17,7 +17,6 @@ class TestLexer(unittest.TestCase):
     # 'DESCRIPTION',
     #'GRADE',
     #'CASTLING']
-
 
     def testComment1(self):
         lexer = ChessLexer()
