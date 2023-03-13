@@ -18,6 +18,55 @@ class TestLexer(unittest.TestCase):
     #'GRADE',
     #'CASTLING']
 
+    #Tests token TURN
+    def testTurn1_Passant(self):
+        lexer = ChessLexer()
+        turn = '1.'
+        lexer.input(turn)
+        token = lexer.token()
+
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "TURN")
+        self.assertEqual(token.value, turn)
+
+    def testTurn2_Passant(self):
+        lexer = ChessLexer()
+        turn = '322.'
+        lexer.input(turn)
+        token = lexer.token()
+
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "TURN")
+        self.assertEqual(token.value, turn)
+
+    def testTurn3_NonPassant(self):
+        lexer = ChessLexer()
+        turnAfter = '0.'
+        lexer.input(turnAfter)
+        token = lexer.token()
+
+        self.assertIsNone(token)
+
+    #Test token TURN_AFTER_COMMENT
+    def testTurnAfter1_Passant(self):
+        lexer = ChessLexer()
+        turnAfter = '2...'
+        lexer.input(turnAfter)
+        token = lexer.token()
+
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "TURN_AFTER_COMMENT")
+        self.assertEqual(token.value, turnAfter)
+
+    def testTurnAfter2_NonPassant(self):
+        lexer = ChessLexer()
+        turn = '0.'
+        lexer.input(turn)
+        token = lexer.token()
+
+        self.assertIsNone(token)
+
+
     def testDescription1(self):
         lexer = ChessLexer()
 
