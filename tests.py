@@ -41,8 +41,8 @@ class TestLexer(unittest.TestCase):
 
     def testTurn3_NonPassant(self):
         lexer = ChessLexer()
-        turnAfter = '0.'
-        lexer.input(turnAfter)
+        turn_after = '0.'
+        lexer.input(turn_after)
         token = lexer.token()
 
         self.assertIsNone(token)
@@ -50,17 +50,17 @@ class TestLexer(unittest.TestCase):
     #Test token TURN_AFTER_COMMENT
     def testTurnAfter1_Passant(self):
         lexer = ChessLexer()
-        turnAfter = '2...'
-        lexer.input(turnAfter)
+        turn_after = '2...'
+        lexer.input(turn_after)
         token = lexer.token()
 
         self.assertIsNotNone(token)
         self.assertEqual(token.type, "TURN_AFTER_COMMENT")
-        self.assertEqual(token.value, turnAfter)
+        self.assertEqual(token.value, turn_after)
 
     def testTurnAfter2_NonPassant(self):
         lexer = ChessLexer()
-        turn = '0.'
+        turn = '0...'
         lexer.input(turn)
         token = lexer.token()
 
