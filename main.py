@@ -58,7 +58,7 @@ class ChessLexer(object):
 
         self.error = False
 
-        print("=== [Current file tested :", filename,"] ===")
+        print("\n=== [Current file tested :", filename,"] ===")
 
         self.input(text)
 
@@ -66,9 +66,9 @@ class ChessLexer(object):
             print(current_token)
 
         if self.error:
-            print("=== [File", filename ,"is NOT valid !!!] ===\n")
+            print("=== [File", filename ,"is NOT valid !!!] ===")
         else:
-            print("=== [File", filename ,"is valid!] ===\n")
+            print("=== [File", filename ,"is valid!] ===")
 
 
 if __name__ == '__main__':
