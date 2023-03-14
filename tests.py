@@ -6,11 +6,11 @@ class TestLexer(unittest.TestCase):
 
     #TODO add more unit tests to test all cases
 
-    #['TURN'                        not OK     ==> en cours  : 1 un TODO à finir : gestion du -
+    #['TURN'                        OK
     # 'TURN_AFTER_COMMENT',         OK
-    # 'PIECE',                      in progress     ==> 1 un TODO à finir : gestion du -
+    # 'PIECE',                      OK
     # 'MOVE',                       OK
-    # 'RESULT',                     in progress     ==> 1 un TODO à finir
+    # 'RESULT',                     OK
     # 'COMMENT',                    not OK
     # 'CHECK',                      not OK
     # 'CHECKMATE',                  not OK
@@ -48,13 +48,16 @@ class TestLexer(unittest.TestCase):
         self.assertIsNone(token)
 
     #TODO Cet exemple est reconnu comme Turn, est-ce bien ? doit-on corriger la regex ?
-    #def testTurn4_NonPassant(self):
-    #    lexer = ChessLexer()
-    #    turn_after = '-3.'
-    #    lexer.input(turn_after)
-    #    token = lexer.token()
-    #    print(token)
-    #    self.assertIsNone(token)
+    #TODO pas besoin, il reconnait le - comme caractère non valide
+    def testTurn4_Passant(self):
+       lexer = ChessLexer()
+       turn = '-3.'
+       lexer.input(turn)
+       token = lexer.token()
+
+       self.assertIsNotNone(token)
+       self.assertEqual(token.type, "TURN")
+       self.assertEqual(token.value, '3.')
 
     #_______________Tests token TURN_AFTER_COMMENT_______________
     def testTurnAfter1_Passant(self):
@@ -102,14 +105,17 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNone(token)
 
-    #TODO cet exemple est reconnu comme pièce, est-ce bien ? doit-on corriger la regex ?
-    #def testPiece4_NonPassant(self):
+    # TODO cet exemple est reconnu comme pièce, est-ce bien ? doit-on corriger la regex ?
+    # TODO pas besoin, il reconnait le caractère - comme invalide, l'annonce et ne récupère que le K de la pièce
+    # def testPiece4_Passant(self):
     #    lexer = ChessLexer()
     #    piece = '-K'
     #    lexer.input(piece)
     #    token = lexer.token()
     #
-    #    self.assertIsNone(token)
+    #    self.assertIsNotNone(token)
+    #    self.assertEqual(token.type, "PIECE")
+    #    self.assertEqual(token.value, 'K')
 
 
     #_______________Tests token MOVE_______________
@@ -179,7 +185,8 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNone(token)
 
-#TODO Vérifier que 1-1 n'apparaisse pas dans une partie, car actuellement toutes les regex le rejette
+    #TODO Vérifier que 1-1 n'apparaisse pas dans une partie, car actuellement toutes les regex le rejette
+    #TODO le 1-1 n'est pas valide, donc une bonne chose qu'elles le rejettent ^^
     #def testResult4_NonPassant(self):
     #    lexer = ChessLexer()
     #    result = '1-1'
