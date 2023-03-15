@@ -11,12 +11,12 @@ class TestLexer(unittest.TestCase):
     # 'PIECE',                      OK
     # 'MOVE',                       OK
     # 'RESULT',                     OK
-    # 'COMMENT',                    not OK
-    # 'CHECK',                      not OK
-    # 'CHECKMATE',                  not OK
-    # 'DESCRIPTION',                in progress     ==> faire cas non passant
-    # 'GRADE',                      not OK
-    # 'CASTLING']                   not OK
+    # 'COMMENT',                    OK
+    # 'CHECK',                      in progress --> TODO à vérifier
+    # 'CHECKMATE',                  in progress --> TODO à vérifier
+    # 'DESCRIPTION',                OK
+    # 'GRADE',                      OK
+    # 'CASTLING']                   OK
 
     #_______________Tests token TURN_______________
     def testTurn1_Passant(self):
@@ -47,8 +47,6 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNone(token)
 
-    #TODO Cet exemple est reconnu comme Turn, est-ce bien ? doit-on corriger la regex ?
-    #TODO pas besoin, il reconnait le - comme caractère non valide
     def testTurn4_Passant(self):
        lexer = ChessLexer()
        turn = '-3.'
@@ -58,6 +56,7 @@ class TestLexer(unittest.TestCase):
        self.assertIsNotNone(token)
        self.assertEqual(token.type, "TURN")
        self.assertEqual(token.value, '3.')
+
 
     #_______________Tests token TURN_AFTER_COMMENT_______________
     def testTurnAfter1_Passant(self):
@@ -72,11 +71,22 @@ class TestLexer(unittest.TestCase):
 
     def testTurnAfter2_NonPassant(self):
         lexer = ChessLexer()
-        turn = '0...'
-        lexer.input(turn)
+        turn_after = '0...'
+        lexer.input(turn_after)
         token = lexer.token()
 
         self.assertIsNone(token)
+
+    def testTurnAfter3_NonPassant(self):
+        lexer = ChessLexer()
+        turn_after = '4..'
+        lexer.input(turn_after)
+        token = lexer.token()
+
+        self.assertIsNotNone(token)
+        self.assertIsNot(token.type, "TURN_AFTER_COMMENT")
+        self.assertIsNot(token.value, turn_after)
+
 
     #_______________Tests token PIECE_______________
     def testPiece1_Passant(self):
@@ -104,18 +114,6 @@ class TestLexer(unittest.TestCase):
         token = lexer.token()
 
         self.assertIsNone(token)
-
-    # TODO cet exemple est reconnu comme pièce, est-ce bien ? doit-on corriger la regex ?
-    # TODO pas besoin, il reconnait le caractère - comme invalide, l'annonce et ne récupère que le K de la pièce
-    # def testPiece4_Passant(self):
-    #    lexer = ChessLexer()
-    #    piece = '-K'
-    #    lexer.input(piece)
-    #    token = lexer.token()
-    #
-    #    self.assertIsNotNone(token)
-    #    self.assertEqual(token.type, "PIECE")
-    #    self.assertEqual(token.value, 'K')
 
 
     #_______________Tests token MOVE_______________
@@ -185,21 +183,94 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNone(token)
 
-    #TODO Vérifier que 1-1 n'apparaisse pas dans une partie, car actuellement toutes les regex le rejette
-    #TODO le 1-1 n'est pas valide, donc une bonne chose qu'elles le rejettent ^^
-    #def testResult4_NonPassant(self):
-    #    lexer = ChessLexer()
-    #    result = '1-1'
-    #    lexer.input(result)
-    #    token = lexer.token()
+    def testResult4_NonPassant(self):
+        lexer = ChessLexer()
+        result = '1-1'
+        lexer.input(result)
+        token = lexer.token()
 
-    #    self.assertIsNot(token.type, "RESULT")
+        self.assertIsNone(token)
+
+    #_______________Tests token COMMENT_______________
+    def testComment1_Passant(self):
+        lexer = ChessLexer()
+        comment = '(jflzjesl& 4. ! xd4)'
+        lexer.input(comment)
+        token = lexer.token()
+
+        self.assertEqual(token.type, "COMMENT")
+        self.assertEqual(token.value, comment)
+
+    def testComment2_Passant(self):
+        lexer = ChessLexer()
+        comment = '{ bla bla (jflzjesl& 4. ! xd4) bla bla}'
+        lexer.input(comment)
+        token = lexer.token()
+
+        self.assertEqual(token.type, "COMMENT")
+        self.assertEqual(token.value, comment)
+
+    def testComment3_NonPassant(self):
+        lexer = ChessLexer()
+        comment = '{ bla bla )'
+        lexer.input(comment)
+        token = lexer.token()
+
+        self.assertIsNone(token)
+
+    #_______________Tests token CHECK_______________
+    def testCheck1_Passant(self):
+        lexer = ChessLexer()
+        check = '+'
+        lexer.input(check)
+        token = lexer.token()
+
+        self.assertEqual(token.type, "CHECK")
+        self.assertEqual(token.value, check)
+
+#TODO  Vérifier qu'il trouver bien les deux tokens
+    def testCheck2_Passant(self):
+        lexer = ChessLexer()
+        check = 'a2+'
+        lexer.input(check)
+        token = lexer.token()
+        print(token.type)
+        print(token.value)
+        print(token)
+        self.assertIsNot(token.type, "CHECK")
+
+    def testCheck3_NonPassant(self):
+        lexer = ChessLexer()
+        check = '++'
+        lexer.input(check)
+        token = lexer.token()
+
+        self.assertIsNot(token.type, "CHECK")
+
+
+    #_______________Tests token CHECKMATE_______________
+    def testCheckmate1_Passant(self):
+        lexer = ChessLexer()
+        checkmate = '++'
+        lexer.input(checkmate)
+        token = lexer.token()
+
+        self.assertEqual(token.type, "CHECKMATE")
+        self.assertEqual(token.value, checkmate)
+
+    #TODO  Vérifier qu'il trouver bien les deux tokens
+    def testCheckmate2_Passant(self):
+        lexer = ChessLexer()
+        checkmate = 'b5++'
+        lexer.input(checkmate)
+        token = lexer.token()
+
+        self.assertIsNot(token.type, "CHECKMATE")
 
 
     #_______________Tests token DESCRIPTION_______________
     def testDescription1_Passant(self):
         lexer = ChessLexer()
-
         description = '[Nzscf5qWgtgNVX "56BnnQIeAhy"]'
         lexer.input(description)
         token = lexer.token()
@@ -210,7 +281,6 @@ class TestLexer(unittest.TestCase):
 
     def testDescription2_Passant(self):
         lexer = ChessLexer()
-
         description ='[test "crazy"]'
         lexer.input(description)
         token = lexer.token()
@@ -218,6 +288,80 @@ class TestLexer(unittest.TestCase):
         self.assertIsNotNone(token)
         self.assertEqual(token.type, "DESCRIPTION")
         self.assertEqual(token.value, description)
+
+    def testDescription3_NonPassant(self):
+        lexer = ChessLexer()
+        description ='[test@ "crazy"]'
+        lexer.input(description)
+        token = lexer.token()
+
+        self.assertIsNone(token)
+
+    def testDescription4_Passant(self):
+        lexer = ChessLexer()
+        description ='[test "@crazy!"]'
+        lexer.input(description)
+        token = lexer.token()
+
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "DESCRIPTION")
+        self.assertEqual(token.value, description)
+
+
+#_______________Tests token GRADE_______________
+    def testGrade1_Passant(self):
+        lexer = ChessLexer()
+        grade = '?'
+        lexer.input(grade)
+        token = lexer.token()
+
+        self.assertEqual(token.type, "GRADE")
+        self.assertEqual(token.value, grade)
+
+    def testGrade2_Passant(self):
+        lexer = ChessLexer()
+        grade = '!'
+        lexer.input(grade)
+        token = lexer.token()
+
+        self.assertEqual(token.type, "GRADE")
+        self.assertEqual(token.value, grade)
+
+    def testGrade3_NonPassant(self):
+        lexer = ChessLexer()
+        grade = '.'
+        lexer.input(grade)
+        token = lexer.token()
+
+        self.assertIsNone(token)
+
+
+#_______________Tests token CASTLING_______________
+    def testCastling1_Passant(self):
+        lexer = ChessLexer()
+        castling = 'O-O'
+        lexer.input(castling)
+        token = lexer.token()
+
+        self.assertEqual(token.type, "CASTLING")
+        self.assertEqual(token.value, castling)
+
+    def testCastling2_Passant(self):
+        lexer = ChessLexer()
+        castling = 'O-O-O'
+        lexer.input(castling)
+        token = lexer.token()
+
+        self.assertEqual(token.type, "CASTLING")
+        self.assertEqual(token.value, castling)
+
+    def testCastling3_NonPassant(self):
+        lexer = ChessLexer()
+        castling = '0-O'
+        lexer.input(castling)
+        token = lexer.token()
+
+        self.assertIsNone(token)
 
 
 # Launch all test units
