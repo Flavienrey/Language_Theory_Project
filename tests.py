@@ -1,21 +1,9 @@
 import unittest
 from main import ChessLexer
+
 """ Unit tests class"""
+
 class TestLexer(unittest.TestCase):
-
-    #TODO add more unit tests to test all cases
-
-    #['TURN'                        OK
-    # 'TURN_AFTER_COMMENT',         OK
-    # 'PIECE',                      OK
-    # 'MOVE',                       OK
-    # 'RESULT',                     OK
-    # 'COMMENT',                    OK
-    # 'CHECK',                      OK
-    # 'CHECKMATE',                  OK
-    # 'DESCRIPTION',                OK
-    # 'GRADE',                      OK
-    # 'CASTLING']                   OK
 
     #_______________Tests token TURN_______________
     def testTurn1_Passant(self):

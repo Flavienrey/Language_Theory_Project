@@ -34,12 +34,14 @@ class ChessLexer(object):
     def t_error(self, t):
         print("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
-        self.error = True
+        self.lexical_error = True
 
 
     # Instantiate the class and build the lexer
     def __init__(self):
-        self.error = False
+        self.previous_token = None
+        self.syntactic_error = None
+        self.lexical_error = False
         self.lexer = lex.lex(object=self)
 
 
@@ -56,16 +58,25 @@ class ChessLexer(object):
     # Test the input
     def test(self, text, filename):
 
-        self.error = False
+        # Variables initialization
+        self.lexical_error = False
+        self.syntactic_error = False
+        self.previous_token = None
+        self.input(text)
 
         print("\n=== [Current file tested :", filename,"] ===")
 
-        self.input(text)
 
+        # We iterate over the input to read tokens
         for current_token in self.lexer:
+
             print(current_token)
 
-        if self.error:
+            self.previous_token = current_token
+
+
+        # Final test to print if an error was found or not
+        if self.lexical_error:
             print("=== [File", filename ,"is NOT valid !!!] ===")
         else:
             print("=== [File", filename ,"is valid!] ===")
