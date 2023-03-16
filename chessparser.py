@@ -6,8 +6,8 @@ def p_expression_plus(p):
     p[0] = p[1]
 
 # Error rule for syntax errors
-    def p_error(self):
-        print("Syntax error in input!")
+def p_error(self):
+    print("Syntax error in input!")
 
 class ChessParser(object):
 
