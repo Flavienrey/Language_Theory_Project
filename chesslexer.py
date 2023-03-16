@@ -70,6 +70,6 @@ class ChessLexer(object):
 
         # Final test to print if an error was found or not
         if self.lexical_error:
-            print("=== [File", filename ,"is NOT valid, there is a lexical error!!!] ===")
+            print("=== [File", filename ,"is NOT valid, lexical error occurred!!!] ===")
         else:
-            print("=== [File", filename ,"is valid, no lexical error occurred!] ===")
+            print("=== [File", filename ,"lexical is valid!] ===")
