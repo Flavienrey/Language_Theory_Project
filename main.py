@@ -1,4 +1,3 @@
-from chesslexer import ChessLexer
 from chessparser import ChessParser
 
 if __name__ == '__main__':

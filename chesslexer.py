@@ -45,7 +45,7 @@ class ChessLexer(object):
 
 
     # Feeds the text into the lexer
-    def input(self, text):
+    def raw_input(self, text):
         self.lexer.input(text)
 
 
@@ -55,13 +55,13 @@ class ChessLexer(object):
 
 
     # Test the input
-    def test(self, text, filename):
+    def input(self, text):
 
         # Variables initialization
         self.lexical_error = False
-        self.input(text)
+        self.lexer.input(text)
 
-        print("\n=== [Current file tested :", filename,"] ===")
+        print("\n[Lexical analysis started]\n")
 
         # We iterate over the input to read tokens
         for current_token in self.lexer:
@@ -70,6 +70,6 @@ class ChessLexer(object):
 
         # Final test to print if an error was found or not
         if self.lexical_error:
-            print("=== [File", filename ,"is NOT valid, lexical error occurred!!!] ===")
+            print("\n[Error during the lexical analysis]\n")
         else:
-            print("=== [File", filename ,"lexical is valid!] ===")
+            print("\n[Correct lexical analysis]\n")
