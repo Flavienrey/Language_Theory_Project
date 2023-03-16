@@ -1,17 +1,18 @@
 import ply.yacc as yacc
-from chesslexer import tokens
+from chesslexer import tokens, ChessLexer
 
-def p_expression_plus(p):
-    'expression : expression PLUS term'
-    p[0] = p[1]
+# Empty production
+def p_empty(p):
+    'empty :'
+    pass
 
 # Error rule for syntax errors
-def p_error(self):
+def p_error(p):
     print("Syntax error in input!")
 
 class ChessParser(object):
 
-    # Instantiate the class and build the lexer
+    # Instantiate the class and build the parser
     def __init__(self):
         self.syntactic_error = None
         self.tokens = tokens
@@ -22,11 +23,11 @@ class ChessParser(object):
 
         print("\n=== [Current file tested :", filename, "] ===")
 
-        result = self.parser.parse(text)
-        print(result)
+        lexer = ChessLexer()
 
-        # Final test to print if an error was found or not
-        if self.syntactic_error:
-            print("=== [File", filename, "is NOT valid, syntactic error occurred!!!] ===")
-        else:
-            print("=== [File", filename, "syntax is valid!] ===")
+        result = self.parser.parse(text, lexer=lexer)
+
+        print("Result :", result)
+
+        print("=== [File", filename, "verifications is done!] ===")
+
