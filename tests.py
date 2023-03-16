@@ -1,6 +1,5 @@
 import unittest
 from main import ChessLexer
-#dd
 """ Unit tests class"""
 class TestLexer(unittest.TestCase):
 
@@ -12,8 +11,8 @@ class TestLexer(unittest.TestCase):
     # 'MOVE',                       OK
     # 'RESULT',                     OK
     # 'COMMENT',                    OK
-    # 'CHECK',                      in progress --> TODO à vérifier
-    # 'CHECKMATE',                  in progress --> TODO à vérifier
+    # 'CHECK',                      OK
+    # 'CHECKMATE',                  OK
     # 'DESCRIPTION',                OK
     # 'GRADE',                      OK
     # 'CASTLING']                   OK
@@ -228,16 +227,17 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "CHECK")
         self.assertEqual(token.value, check)
 
-#TODO  Vérifier qu'il trouver bien les deux tokens
     def testCheck2_Passant(self):
         lexer = ChessLexer()
         check = 'a2+'
         lexer.input(check)
         token = lexer.token()
-        print(token.type)
-        print(token.value)
+        token2 = lexer.token()
         print(token)
+        print(token2)
         self.assertIsNot(token.type, "CHECK")
+        self.assertEqual(token.type, "MOVE")
+        self.assertEqual(token2.type, "CHECK")
 
     def testCheck3_NonPassant(self):
         lexer = ChessLexer()
@@ -258,14 +258,17 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "CHECKMATE")
         self.assertEqual(token.value, checkmate)
 
-    #TODO  Vérifier qu'il trouver bien les deux tokens
+
     def testCheckmate2_Passant(self):
         lexer = ChessLexer()
         checkmate = 'b5++'
         lexer.input(checkmate)
         token = lexer.token()
+        token2 = lexer.token()
 
         self.assertIsNot(token.type, "CHECKMATE")
+        self.assertEqual(token.type, "MOVE")
+        self.assertEqual(token2.type, "CHECKMATE")
 
 
     #_______________Tests token DESCRIPTION_______________
