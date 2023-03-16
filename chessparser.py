@@ -3,6 +3,7 @@ from chesslexer import tokens
 
 class ChessParser(object):
 
+
     def p_expression_plus(self, p):
         'expression : expression PLUS term'
         p[0] = p[1] + p[3]
@@ -11,14 +12,12 @@ class ChessParser(object):
     def p_error(self):
         print("Syntax error in input!")
 
-
     # Instantiate the class and build the lexer
     def __init__(self):
         self.syntactic_error = None
-
+        self.tokens = tokens
         # Build the parser
         self.parser = yacc.yacc()
-
 
     def test(self, text, filename):
 
