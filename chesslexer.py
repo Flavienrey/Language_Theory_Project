@@ -1,9 +1,9 @@
 import ply.lex as lex
-class ChessLexer(object):
 
-    # List of token names.
-    tokens = ['TURN', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE', 'DESCRIPTION',
-              'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT']
+# List of token names
+tokens = ['TURN', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
+                       'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT']
+class ChessLexer(object):
 
     # Regular expression rules for simple tokens
     t_TURN = r'[1-9][0-9]*\.'
@@ -38,8 +38,8 @@ class ChessLexer(object):
 
     # Instantiate the class and build the lexer
     def __init__(self):
-        self.previous_token = None
-        self.syntactic_error = None
+        self.tokens = ['TURN', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
+              'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT']
         self.lexical_error = False
         self.lexer = lex.lex(object=self)
 
