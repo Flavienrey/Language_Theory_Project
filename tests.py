@@ -219,10 +219,10 @@ class TestLexer(unittest.TestCase):
         lexer = ChessLexer()
         check = 'a2+'
         lexer.input(check)
+
         token = lexer.token()
         token2 = lexer.token()
-        print(token)
-        print(token2)
+
         self.assertIsNot(token.type, "CHECK")
         self.assertEqual(token.type, "MOVE")
         self.assertEqual(token2.type, "CHECK")
