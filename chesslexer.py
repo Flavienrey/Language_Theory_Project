@@ -65,12 +65,11 @@ class ChessLexer(object):
 
         # We iterate over the input to read tokens
         for current_token in self.lexer:
-
             print(current_token)
 
 
         # Final test to print if an error was found or not
         if self.lexical_error:
-            print("=== [File", filename ,"is NOT valid !!!] ===")
+            print("=== [File", filename ,"is NOT valid, there is a lexical error!!!] ===")
         else:
-            print("=== [File", filename ,"is valid!] ===")
+            print("=== [File", filename ,"is valid, no lexical error occurred!] ===")
