@@ -10,7 +10,7 @@ def p_event_descriptor(p):
     '     | empty'
 
 def p_turn(p):
-    'turn : turn'
+    'turn : TURN whiteMove whiteComment blackMove blackComment turn'
     '     | empty'
 
 # Empty production
