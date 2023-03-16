@@ -1,16 +1,15 @@
 import ply.yacc as yacc
 from chesslexer import tokens
 
-class ChessParser(object):
+def p_expression_plus(p):
+    'expression : expression PLUS term'
+    p[0] = p[1]
 
-
-    def p_expression_plus(self, p):
-        'expression : expression PLUS term'
-        p[0] = p[1] + p[3]
-
-    # Error rule for syntax errors
+# Error rule for syntax errors
     def p_error(self):
         print("Syntax error in input!")
+
+class ChessParser(object):
 
     # Instantiate the class and build the lexer
     def __init__(self):
