@@ -11,7 +11,6 @@ class TestParser(unittest.TestCase):
     #WhiteMove          : NOT OK
     #BlackMove          : NOT OK
     #EventCheck         : NOT OK
-    #EventCheckMate     : NOT OK
     #WhiteComment       : NOT OK
     #BlackComment       : NOT OK
 
@@ -55,13 +54,6 @@ class TestParser(unittest.TestCase):
         parser = ChessParser()
 
     def testEventCheck2_NonPassant(self):
-        parser = ChessParser()
-
-    #_______________Tests production EventCheckMate_______________
-    def testEventCheckMate1_Passant(self):
-        parser = ChessParser()
-
-    def testEventCheckMate2_NonPassant(self):
         parser = ChessParser()
 
     #_______________Tests production WhiteComment_______________
