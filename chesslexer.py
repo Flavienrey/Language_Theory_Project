@@ -74,5 +74,8 @@ class ChessLexer(object):
         # Final test to print if an error was found or not
         if self.lexical_error:
             print("\n[Error during the lexical analysis]\n")
+            for error in self.tab_errors:
+                print(error)
+
         else:
             print("\n[Correct lexical analysis]\n")
