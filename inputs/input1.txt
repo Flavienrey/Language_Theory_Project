@@ -1,6 +1,6 @@
 [joueura "magnus"]
 
+1. e4 d5  {Scandinavian defence (often follows 2. exd5 Da5 {not often 2... c6})} 2. f7 a2++
 
-1. e4 d5 {Scandinavian defence (often follows 2. exd5 Da5 {not often 2... c6})} 2. f7 a2++
 444
 1/2-1/2

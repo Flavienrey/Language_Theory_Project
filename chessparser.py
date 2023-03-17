@@ -18,21 +18,19 @@ def p_event_grade(p):
             | empty'''
 
 def p_white_move(p):
-    '''whiteMove : PIECE MOVE eventCheck eventCheckMate
+    '''whiteMove : PIECE MOVE eventCheck
             | CASTLING'''
 
 def p_black_move(p):
-    '''blackMove : PIECE MOVE eventCheck eventCheckMate
+    '''blackMove : PIECE MOVE eventCheck
             | CASTLING
             | empty'''
 
 def p_event_check(p):
     '''eventCheck : CHECK
+            | CHECKMATE
             | empty'''
 
-def p_event_check_mate(p):
-    '''eventCheckMate : CHECKMATE
-            | empty'''
 
 def p_white_comment(p):
     '''whiteComment : COMMENT TURN_AFTER_COMMENT
