@@ -1,6 +1,9 @@
 import ply.yacc as yacc
 from chesslexer import tokens, ChessLexer
 
+def p_start(p):
+    '''start : game'''
+
 def p_game(p):
     '''game : eventDescriptor turn RESULT game
             | empty'''

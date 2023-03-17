@@ -8,7 +8,7 @@ if __name__ == '__main__':
     parser = ChessParser()
 
     #Load the input files
-    filenames = ['inputs/input1.txt']#,'inputs/input2.txt']
+    filenames = ['inputs/input3.txt']#,'inputs/input2.txt']
 
     for file in filenames:
         with open(file,'r') as data:
