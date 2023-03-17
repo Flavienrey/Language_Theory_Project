@@ -3,6 +3,7 @@ import ply.lex as lex
 # List of token names
 tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
                        'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT', 'NEW_LINE']
+
 class ChessLexer(object):
 
     # Regular expression rules for simple tokens
@@ -24,6 +25,7 @@ class ChessLexer(object):
     # A string containing ignored characters (spaces and tabs)
     t_ignore = ' \t'
 
+
     # Define a rule so we can track line numbers
     def t_NEW_LINE(self, t):
         r'\n+'
@@ -31,7 +33,7 @@ class ChessLexer(object):
 
     # Error handling rule
     def t_error(self, t):
-        print("Illegal character '%s' at line %d" % (t.value[0] ,t.lexer.lineno) )
+        self.tab_errors.append("Illegal character '%s' at line %d" % (t.value[0] ,t.lexer.lineno))
         t.lexer.skip(1)
         self.lexical_error = True
 
@@ -42,6 +44,7 @@ class ChessLexer(object):
               'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT', 'NEW_LINE']
         self.lexical_error = False
         self.lexer = lex.lex(object=self)
+        self.tab_errors = []
 
 
     # Feeds the text into the lexer
