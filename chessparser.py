@@ -4,32 +4,32 @@ from node import Node
 
 def p_start(p):
     '''start : game'''
-    print("see")
+    print("start")
 
 def p_game(p):
     '''game : eventDescriptor turn RESULT game
             | empty'''
-    print("see")
+    print("game")
 
 def p_event_descriptor(p):
     '''eventDescriptor : DESCRIPTION NEW_LINE eventDescriptor
                        | empty'''
-    print("see")
+    print("eventDescriptor")
 
 def p_turn(p):
     '''turn : TURN_NUMBER_WITH_DOT whiteMove eventGrade whiteComment blackMove eventGrade blackComment  turn
             | empty'''
-    print("see")
+    print("turn")
 
 def p_event_grade(p):
     '''eventGrade : GRADE
                   | empty'''
-    print("see")
+    print("grade")
 
 def p_white_move(p):
     '''whiteMove : PIECE MOVE eventCheck
                  | CASTLING'''
-    print("see")
+    print("whiteMove")
 
 def p_black_move(p):
     '''blackMove : PIECE MOVE eventCheck
@@ -41,23 +41,24 @@ def p_event_check(p):
     '''eventCheck : CHECK
                   | CHECKMATE
                   | empty'''
-    print("see")
+    print("eventCheck")
 
 
 def p_white_comment(p):
     '''whiteComment : COMMENT TURN_AFTER_COMMENT
                     | empty'''
-    print("see")
+    print("whiteComment")
 
 def p_black_comment(p):
     '''blackComment : COMMENT
                     | empty'''
-    print("see")
+    print("blackComment")
 
 
 # Empty production
 def p_empty(p):
     '''empty :'''
+    print("empty")
     pass
 
 
