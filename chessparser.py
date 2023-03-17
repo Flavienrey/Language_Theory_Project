@@ -2,50 +2,50 @@ import ply.yacc as yacc
 from chesslexer import tokens, ChessLexer
 
 def p_game(p):
-    'game : eventDescriptor turn RESULT game'
-    '     | empty'
+    '''game : eventDescriptor turn RESULT game
+            | empty'''
 
 def p_event_descriptor(p):
-    'eventDescriptor : DESCRIPTION NEW_LINE eventDescriptor'
-    '     | empty'
+    '''eventDescriptor : DESCRIPTION NEW_LINE eventDescriptor
+            | empty'''
 
 def p_turn(p):
-    'turn : TURN_NUMBER_WITH_DOT whiteMove eventGrade whiteComment blackMove eventGrade blackComment  turn'
-    '     | empty'
+    '''turn : TURN_NUMBER_WITH_DOT whiteMove eventGrade whiteComment blackMove eventGrade blackComment  turn
+            | empty'''
 
 def p_event_grade(p):
-    'eventGrade : GRADE'
-    '     | empty'
+    '''eventGrade : GRADE
+            | empty'''
 
 def p_white_move(p):
-    'whiteMove : PIECE MOVE eventCheck eventCheckMate'
-    '     | CASTLING'
+    '''whiteMove : PIECE MOVE eventCheck eventCheckMate
+            | CASTLING'''
 
 def p_black_move(p):
-    'blackMove : PIECE MOVE eventCheck eventCheckMate'
-    '     | CASTLING'
-    '     | empty'
+    '''blackMove : PIECE MOVE eventCheck eventCheckMate
+            | CASTLING
+            | empty'''
 
 def p_event_check(p):
-    'eventCheck : CHECK'
-    '     | empty'
+    '''eventCheck : CHECK
+            | empty'''
 
 def p_event_check_mate(p):
-    'eventCheckMate : CHECKMATE'
-    '     | empty'
+    '''eventCheckMate : CHECKMATE
+            | empty'''
 
 def p_white_comment(p):
-    'whiteComment : COMMENT TURN_AFTER_COMMENT'
-    '     | empty'
+    '''whiteComment : COMMENT TURN_AFTER_COMMENT
+            | empty'''
 
 def p_black_comment(p):
-    'blackComment : COMMENT '
-    '     | empty'
+    '''blackComment : COMMENT
+            | empty'''
 
 
 # Empty production
 def p_empty(p):
-    'empty :'
+    '''empty :'''
     pass
 
 # Error rule for syntax errors
