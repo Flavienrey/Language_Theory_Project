@@ -5,7 +5,7 @@ from chesslexer import ChessLexer
 
 class TestLexer(unittest.TestCase):
 
-    #_______________Tests token TURN_______________
+    #_______________Tests token TURN_NUMBER_WITH_DOT_______________
     def testTurn1_Passant(self):
         lexer = ChessLexer()
         turn = '1.'
@@ -13,7 +13,7 @@ class TestLexer(unittest.TestCase):
         token = lexer.token()
 
         self.assertIsNotNone(token)
-        self.assertEqual(token.type, "TURN")
+        self.assertEqual(token.type, "TURN_NUMBER_WITH_DOT")
         self.assertEqual(token.value, turn)
 
     def testTurn2_Passant(self):
@@ -23,7 +23,7 @@ class TestLexer(unittest.TestCase):
         token = lexer.token()
 
         self.assertIsNotNone(token)
-        self.assertEqual(token.type, "TURN")
+        self.assertEqual(token.type, "TURN_NUMBER_WITH_DOT")
         self.assertEqual(token.value, turn)
 
     def testTurn3_NonPassant(self):
@@ -41,7 +41,7 @@ class TestLexer(unittest.TestCase):
        token = lexer.token()
 
        self.assertIsNotNone(token)
-       self.assertEqual(token.type, "TURN")
+       self.assertEqual(token.type, "TURN_NUMBER_WITH_DOT")
        self.assertEqual(token.value, '3.')
 
 

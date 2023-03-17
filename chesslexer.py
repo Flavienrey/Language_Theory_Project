@@ -1,12 +1,12 @@
 import ply.lex as lex
 
 # List of token names
-tokens = ['TURN', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
-                       'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT', 'newline']
+tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
+                       'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT', 'NEW_LINE']
 class ChessLexer(object):
 
     # Regular expression rules for simple tokens
-    t_TURN = r'[1-9][0-9]*\.'
+    t_TURN_NUMBER_WITH_DOT = r'[1-9][0-9]*\.'
     t_TURN_AFTER_COMMENT = r'[1-9][0-9]*\.{3}'
     t_PIECE = r'[P|N|B|R|Q|K]'
     t_MOVE = r'[a-h]?[1-8]?[x]?[a-h][1-8]'
@@ -25,7 +25,7 @@ class ChessLexer(object):
     t_ignore = ' \t'
 
     # Define a rule so we can track line numbers
-    def t_newline(self, t):
+    def t_NEW_LINE(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
 
@@ -38,8 +38,8 @@ class ChessLexer(object):
 
     # Instantiate the class and build the lexer
     def __init__(self):
-        self.tokens = ['TURN', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
-              'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT', 'newline']
+        self.tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
+              'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT', 'NEW_LINE']
         self.lexical_error = False
         self.lexer = lex.lex(object=self)
 
