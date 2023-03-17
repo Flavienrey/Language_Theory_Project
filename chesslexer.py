@@ -2,7 +2,7 @@ import ply.lex as lex
 
 # List of token names
 tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
-                       'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT', 'NEW_LINE']
+                       'DESCRIPTION', 'GRADE', 'CASTLING', 'NEW_LINE']
 
 class ChessLexer(object):
 
@@ -18,9 +18,6 @@ class ChessLexer(object):
     t_DESCRIPTION = r'\[[a-zA-Z0-9_]*\s\".*\"\]'
     t_GRADE = r'[\?|\!]'
     t_CASTLING = r'O\-O(\-O)?'
-
-    # A Comment that should be ignored
-    t_IGNORE_FILE_COMMENT = r'\#.*'
 
     # A string containing ignored characters (spaces and tabs)
     t_ignore = ' \t'
@@ -41,7 +38,7 @@ class ChessLexer(object):
     # Instantiate the class and build the lexer
     def __init__(self):
         self.tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
-              'DESCRIPTION', 'GRADE', 'CASTLING', 'IGNORE_FILE_COMMENT', 'NEW_LINE']
+              'DESCRIPTION', 'GRADE', 'CASTLING', 'NEW_LINE']
         self.lexical_error = False
         self.lexer = lex.lex(object=self)
         self.tab_errors = []
