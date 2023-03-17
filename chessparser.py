@@ -10,7 +10,7 @@ def p_game(p):
 
 def p_event_descriptor(p):
     '''eventDescriptor : DESCRIPTION NEW_LINE eventDescriptor
-            | empty'''
+                       | empty'''
 
 def p_turn(p):
     '''turn : TURN_NUMBER_WITH_DOT whiteMove eventGrade whiteComment blackMove eventGrade blackComment  turn
@@ -18,30 +18,30 @@ def p_turn(p):
 
 def p_event_grade(p):
     '''eventGrade : GRADE
-            | empty'''
+                  | empty'''
 
 def p_white_move(p):
     '''whiteMove : PIECE MOVE eventCheck
-            | CASTLING'''
+                 | CASTLING'''
 
 def p_black_move(p):
     '''blackMove : PIECE MOVE eventCheck
-            | CASTLING
-            | empty'''
+                 | CASTLING
+                 | empty'''
 
 def p_event_check(p):
     '''eventCheck : CHECK
-            | CHECKMATE
-            | empty'''
+                  | CHECKMATE
+                  | empty'''
 
 
 def p_white_comment(p):
     '''whiteComment : COMMENT TURN_AFTER_COMMENT
-            | empty'''
+                    | empty'''
 
 def p_black_comment(p):
     '''blackComment : COMMENT
-            | empty'''
+                    | empty'''
 
 
 # Empty production
@@ -49,11 +49,17 @@ def p_empty(p):
     '''empty :'''
     pass
 
-# Error rule for syntax errors
-def p_error(p):
-    print("Syntax error in input!")
 
 class ChessParser(object):
+
+    # Error rule for syntax errors
+    def p_error(self, p):
+        if p:
+            print("Syntax error at token", p.type)
+            # Just discard the token and tell the parser it's okay.
+            self.parser.errok()
+        else:
+            print("Syntax error at EOF")
 
     # Instantiate the class and build the parser
     def __init__(self):
