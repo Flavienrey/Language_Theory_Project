@@ -31,7 +31,7 @@ class ChessLexer(object):
 
     # Error handling rule
     def t_error(self, t):
-        print("Illegal character '%s'" % t.value[0])
+        print("Illegal character '%s' at line %d" % (t.value[0] ,t.lexer.lineno) )
         t.lexer.skip(1)
         self.lexical_error = True
 
