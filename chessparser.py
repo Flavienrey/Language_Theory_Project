@@ -64,7 +64,6 @@ def p_black_comment(p):
 def p_empty(p):
     '''empty :'''
     print("empty")
-    pass
 
 
 class ChessParser(object):
@@ -84,16 +83,23 @@ class ChessParser(object):
         self.tokens = tokens
         self.tab_errors =[]
         # Build the parser
-        self.parser = yacc.yacc()
+        self.parser = yacc.yacc(debug=True)
 
     def test(self, text, filename):
+
         print("\n=== [Current file tested :", filename, "] ===")
+
         lexer = ChessLexer()
+
         result = self.parser.parse(text, lexer=lexer)
+
         print("\n[Syntaxic analysis started]\n")
+
         # Final test to print if an error was found or not
         if self.syntactic_error:
+
             print("\n[Error during the syntaxic analysis] :")
+
             for error in self.tab_errors:
                 print(error)
         else:

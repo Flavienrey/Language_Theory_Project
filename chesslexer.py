@@ -76,3 +76,6 @@ class ChessLexer(object):
 
         else:
             print("\n[Correct lexical analysis]\n")
+
+        # Add the input again for the parser to execute correctly
+        self.lexer.input(text)
