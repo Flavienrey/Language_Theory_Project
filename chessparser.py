@@ -95,6 +95,6 @@ def test(parser, text, filename):
         print("[Error during the syntactic analysis]")
 
     else:
-        print("\n[Correct syntactic analysis]\n")
+        print("[Correct syntactic analysis]")
 
     print("\n=== [File", filename, "verifications is done!] ===")
