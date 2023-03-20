@@ -2,7 +2,7 @@ import ply.lex as lex
 
 # List of token names
 tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
-                       'DESCRIPTION', 'GRADE', 'CASTLING', 'NEW_LINE']
+                       'DESCRIPTION', 'GRADE', 'CASTLING']
 
 class ChessLexer(object):
 
@@ -38,7 +38,7 @@ class ChessLexer(object):
     # Instantiate the class and build the lexer
     def __init__(self):
         self.tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
-              'DESCRIPTION', 'GRADE', 'CASTLING', 'NEW_LINE']
+              'DESCRIPTION', 'GRADE', 'CASTLING']
         self.lexical_error = False
         self.lexer = lex.lex(object=self)
         self.tab_errors = []
@@ -79,7 +79,7 @@ class ChessLexer(object):
             print("[Error during the lexical analysis]\n")
 
         else:
-            print("\n[Correct lexical analysis]\n")
+            print("[Correct lexical analysis]\n")
 
         # Add the input again for the parser to execute correctly
         self.lexer.input(text)
