@@ -1,5 +1,5 @@
 from ply import yacc
-from chessparser import test
+from chessparser import *
 
 # List of token names
 tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
