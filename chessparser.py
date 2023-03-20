@@ -27,15 +27,20 @@ def p_event_grade(p):
     print("grade")
 
 def p_white_move(p):
-    '''whiteMove : PIECE MOVE eventCheck
+    '''whiteMove : eventPiece MOVE eventCheck
                  | CASTLING'''
     print("whiteMove")
 
 def p_black_move(p):
-    '''blackMove : PIECE MOVE eventCheck
+    '''blackMove : eventPiece MOVE eventCheck
                  | CASTLING
                  | empty'''
-    print("see")
+    print("blackMove")
+
+def p_event_piece(p):
+    '''eventPiece : PIECE
+                | empty'''
+    print("eventPiece")
 
 def p_event_check(p):
     '''eventCheck : CHECK
