@@ -35,7 +35,7 @@ def p_black_move(p):
     '''blackMove : PIECE MOVE eventCheck
                  | CASTLING
                  | empty'''
-    print("see")
+    print("blackMove")
 
 def p_event_check(p):
     '''eventCheck : CHECK
