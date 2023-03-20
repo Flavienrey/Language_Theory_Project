@@ -1,6 +1,7 @@
-import ply.yacc as yacc
-from chesslexer import tokens, ChessLexer
-from node import Node
+from chesslexer import ChessLexer
+
+syntactic_error = None
+tab_errors = []
 
 def p_start(p):
     '''start : game'''
@@ -59,53 +60,39 @@ def p_black_comment(p):
                     | empty'''
     print("blackComment")
 
-
 # Empty production
 def p_empty(p):
     '''empty :'''
     print("empty")
 
-class ChessParser(object):
+# Error rule for syntax errors
+def p_error(p):
+    if p:
+        global syntactic_error
+        global tab_errors
+        syntactic_error = True
+        tab_errors.append("Syntax error : Token type = " + p.type + " | Value = " + p.value)
+    else:
+        print("Syntax error at EOF")
 
-    # Error rule for syntax errors
-    def p_error(self, p):
-        if p:
-            print('\033[91m' + "Syntax error : Token type = ", p.type, "Value =", p.value + '\033[0m')
+def test(parser, text, filename):
+    print("\n=== [Current file tested :", filename, "] ===")
 
-            # Just discard the token and tell the parser it's okay.
-            self.parser.errok()
-            self.syntactic_error = True
-        else:
-            print("Syntax error at EOF")
+    lexer = ChessLexer()
 
-    # Instantiate the class and build the parser
-    def __init__(self):
-        self.syntactic_error = None
-        self.tokens = tokens
-        self.tab_errors =[]
-        # Build the parser
-        self.parser = yacc.yacc(self, debug=True)
+    parser.parse(text, lexer=lexer)
 
-    def test(self, text, filename):
+    print("\n[Syntactic analysis started]")
 
-        print("\n=== [Current file tested :", filename, "] ===")
+    # Final test to print if an error was found or not
+    if syntactic_error:
 
-        lexer = ChessLexer()
+        for error in tab_errors:
+            print('\033[91m' + error + '\033[0m')
 
-        result = self.parser.parse(text, lexer=lexer)
+        print("[Error during the syntactic analysis]")
 
-        print("\n[Syntaxic analysis started]\n")
+    else:
+        print("\n[Correct syntactic analysis]\n")
 
-        # Final test to print if an error was found or not
-        if self.syntactic_error:
-
-            print("\n[Error during the syntaxic analysis] :")
-
-            for error in self.tab_errors:
-                print(error)
-        else:
-            print("\n[Correct syntaxic analysis]\n")
-
-        print("\nResult :", result)
-        print("\n=== [File", filename, "verifications is done!] ===")
-
+    print("\n=== [File", filename, "verifications is done!] ===")
