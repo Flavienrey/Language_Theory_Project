@@ -65,15 +65,16 @@ def p_empty(p):
     '''empty :'''
     print("empty")
 
-
 class ChessParser(object):
 
     # Error rule for syntax errors
     def p_error(self, p):
         if p:
-            print("Syntax error at token", p.type)
+            print('\033[91m' + "Syntax error : Token type = ", p.type, "Value =", p.value + '\033[0m')
+
             # Just discard the token and tell the parser it's okay.
             self.parser.errok()
+            self.syntactic_error = True
         else:
             print("Syntax error at EOF")
 
@@ -83,7 +84,7 @@ class ChessParser(object):
         self.tokens = tokens
         self.tab_errors =[]
         # Build the parser
-        self.parser = yacc.yacc(debug=True)
+        self.parser = yacc.yacc(self, debug=True)
 
     def test(self, text, filename):
 
