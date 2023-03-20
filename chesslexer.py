@@ -61,7 +61,7 @@ class ChessLexer(object):
         self.lexical_error = False
         self.lexer.input(text)
 
-        print("\n[Lexical analysis started]\n")
+        print("\n[Lexical analysis started]")
 
         # We iterate over the input to read tokens
         for current_token in self.lexer:
@@ -70,12 +70,17 @@ class ChessLexer(object):
 
         # Final test to print if an error was found or not
         if self.lexical_error:
-            print("\n[Error during the lexical analysis]\n")
+
+            print("\n!!! [List of errors] !!!")
+
             for error in self.tab_errors:
-                print(error)
+                print('\033[91m'+error+'\033[0m')
+
+            print("[Error during the lexical analysis]\n")
 
         else:
             print("\n[Correct lexical analysis]\n")
 
         # Add the input again for the parser to execute correctly
         self.lexer.input(text)
+        self.lexer.lineno = 1

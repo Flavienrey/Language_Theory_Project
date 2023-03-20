@@ -10,7 +10,7 @@ if __name__ == '__main__':
     inputs = []
 
     # Load the input files
-    filenames = ['inputs/input3.txt']  # ,'inputs/input2.txt']
+    filenames = ['inputs/input2.txt']  # ,'inputs/input2.txt']
 
     for file in filenames:
         with open(file, 'r') as data:
