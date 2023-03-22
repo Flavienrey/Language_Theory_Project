@@ -12,7 +12,7 @@ class ChessLexer(object):
     t_PIECE = r'[P|N|B|R|Q|K]'
     t_MOVE = r'[a-h]?[1-8]?[x]?[a-h][1-8]'
     t_RESULT = r'1\-0|0\-1|1\/2\-1\/2'
-    t_TEXT = r'[a-zA-Z_-]+'
+    t_TEXT = r'[a-zA-Z_]+'
     t_OPENING_PARENTHESIS = r'\('
     t_CLOSING_PARENTHESIS = r'\)'
     t_OPENING_BRACE = r'\{'
