@@ -16,14 +16,12 @@ def p_start(p):
     '''start : game'''
     global tree
     tree = Node(get_elem_in_slice(p, 1))
-    print("start")
 
 
 def p_game(p):
     '''game : eventDescriptor turn RESULT game
             | empty'''
     p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4)])
-    print("game")
 
 
 def p_event_descriptor(p):
@@ -31,7 +29,6 @@ def p_event_descriptor(p):
                        | empty'''
 
     p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2)])
-    print("eventDescriptor")
 
 
 def p_turn(p):
@@ -39,21 +36,18 @@ def p_turn(p):
             | empty'''
     p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
                  get_elem_in_slice(p, 5), get_elem_in_slice(p, 6), get_elem_in_slice(p, 7), get_elem_in_slice(p, 8)])
-    print("turn")
 
 
 def p_event_grade(p):
     '''eventGrade : GRADE
                   | empty'''
     p[0] = Node(get_elem_in_slice(p, 1))
-    print("grade")
 
 
 def p_white_move(p):
     '''whiteMove : eventPiece MOVE eventCheck
                  | CASTLING'''
     p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3)])
-    print("whiteMove")
 
 
 def p_black_move(p):
@@ -61,14 +55,12 @@ def p_black_move(p):
                  | CASTLING
                  | empty'''
     p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3)])
-    print("blackMove")
 
 
 def p_event_piece(p):
     '''eventPiece : PIECE
                 | empty'''
     p[0] = Node(get_elem_in_slice(p, 1))
-    print("eventPiece")
 
 
 def p_event_check(p):
@@ -76,28 +68,24 @@ def p_event_check(p):
                   | CHECKMATE
                   | empty'''
     p[0] = Node(get_elem_in_slice(p, 1))
-    print("eventCheck")
 
 
 def p_white_comment(p):
     '''whiteComment : COMMENT TURN_AFTER_COMMENT
                     | empty'''
     p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2)])
-    print("whiteComment")
 
 
 def p_black_comment(p):
     '''blackComment : COMMENT
                     | empty'''
     p[0] = Node(get_elem_in_slice(p, 1))
-    print("blackComment")
 
 
 # Empty production
 def p_empty(p):
     '''empty :'''
     p[0] = None
-    # print("empty")
 
 
 # Error rule for syntax errors
