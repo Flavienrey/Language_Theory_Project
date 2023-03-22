@@ -39,7 +39,7 @@ def p_event_descriptor(p):
 
 def p_turn(p):
     '''turn : empty
-            | TURN_NUMBER_WITH_DOT whiteMove eventGrade whiteComment blackMove eventGrade blackComment  turn'''
+            | TURN_NUMBER_WITH_DOT whiteMove eventGrade whiteComment blackMove eventGrade simpleComment  turn'''
 
 
     global turnIndex, tab_errors, syntactic_error
@@ -100,16 +100,29 @@ def p_event_check(p):
 
 
 def p_white_comment(p):
-    '''whiteComment : COMMENT TURN_AFTER_COMMENT
+    '''whiteComment : openingCharacter text simpleComment text closingCharacter TURN_AFTER_COMMENT
                     | empty'''
+
+    #check if opening == closing
     p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2)])
 
 
-def p_black_comment(p):
-    '''blackComment : COMMENT
-                    | empty'''
+def p_simple_comment(p):
+    '''simpleComment : openingCharacter text simpleComment text closingCharacter
+                     | empty'''
+    # check if opening == closing
     p[0] = Node(get_elem_in_slice(p, 1))
 
+def p_opening_character(p):
+    '''openingCharacter : OPENING_PARENTHESIS
+                        | OPENING_BRACE'''
+def p_text(p):
+    '''text : TEXT
+            | empty'''
+def p_closing_character(p):
+    '''closingCharacter : CLOSING_PARENTHESIS
+                        | CLOSING_BRACE'''
+    
 
 # Empty production
 def p_empty(p):
@@ -123,8 +136,7 @@ def p_error(p):
     global parser
 
     if p:
-        global syntactic_error
-        global tab_errors
+        global syntactic_error, tab_errors, parser
         syntactic_error = True
         tab_errors.append("Syntax error : " + p.type + ", " + p.value + " at line " + str(p.lineno))
         parser.errok()
