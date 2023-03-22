@@ -59,7 +59,7 @@ def p_turn(p):
 
         else:
 
-            string_error = "Error : Should be turn " + str(turnIndex) + " and is turn " + str(current_turn.value)
+            string_error = "Error : Turn " + str(turnIndex) + " missing, we got turn " + str(current_turn.value)
             tab_errors.append(string_error)
             syntactic_error = True
 
@@ -102,7 +102,7 @@ def p_event_check(p):
 
 
 def p_white_comment(p):
-    '''whiteComment : openingCharacter text simpleComment text closingCharacter TURN_AFTER_COMMENT
+    '''whiteComment : openingCharacter eventData simpleComment eventData closingCharacter TURN_AFTER_COMMENT
                     | empty'''
 
     # check if opening == closing
@@ -110,22 +110,27 @@ def p_white_comment(p):
 
 
 def p_simple_comment(p):
-    '''simpleComment : openingCharacter eventText simpleComment eventText closingCharacter
+    '''simpleComment : openingCharacter eventData simpleComment eventData closingCharacter
                      | empty'''
     # check if opening == closing
     p[0] = Node(get_elem_in_slice(p, 1))
 
+def p_event_data(p):
+    '''eventData : TURN_NUMBER_WITH_DOT eventData
+                 | TURN_AFTER_COMMENT eventData
+                 | PIECE eventData
+                 | MOVE eventData
+                 | RESULT eventData
+                 | TEXT eventData
+                 | CHECK eventData
+                 | CHECKMATE eventData
+                 | GRADE eventData
+                 | CASTLING eventData
+                 | empty'''
 
 def p_opening_character(p):
     '''openingCharacter : OPENING_PARENTHESIS
                         | OPENING_BRACE'''
-
-def p_eventText(p):
-    '''text : TEXT
-                | empty'''
-def p_text(p):
-    '''text : TEXT
-            | empty'''
 
 def p_closing_character(p):
     '''closingCharacter : CLOSING_PARENTHESIS
