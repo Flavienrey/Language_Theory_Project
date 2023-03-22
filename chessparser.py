@@ -3,7 +3,8 @@ from chesslexer import ChessLexer
 from node import Node
 
 # List of token names
-tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
+tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'TEXT', 'OPENING_PARENTHESIS',
+          'CLOSING_PARENTHESIS', 'OPENING_BRACE', 'CLOSING_BRACE', 'CHECK', 'CHECKMATE',
           'DESCRIPTION', 'GRADE', 'CASTLING']
 
 syntactic_error = None
@@ -11,6 +12,7 @@ tab_errors = []
 tree = None
 turnIndex = None
 parser = None
+
 
 def get_elem_in_slice(p, index):
     if index < len(p.slice):
@@ -41,7 +43,6 @@ def p_turn(p):
     '''turn : empty
             | TURN_NUMBER_WITH_DOT whiteMove eventGrade whiteComment blackMove eventGrade simpleComment  turn'''
 
-
     global turnIndex, tab_errors, syntactic_error
 
     current_turn = get_elem_in_slice(p, 1)
@@ -51,13 +52,14 @@ def p_turn(p):
         if turnIndex is None:
             turnIndex = int(current_turn.value.split('.')[0])
 
-        if current_turn.value == str(turnIndex)+'.':
-            p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
-                     get_elem_in_slice(p, 5), get_elem_in_slice(p, 6), get_elem_in_slice(p, 7), get_elem_in_slice(p, 8)])
+        if current_turn.value == str(turnIndex) + '.':
+            p[0] = Node(
+                [get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
+                 get_elem_in_slice(p, 5), get_elem_in_slice(p, 6), get_elem_in_slice(p, 7), get_elem_in_slice(p, 8)])
 
         else:
 
-            string_error = "Error : Should be turn "+str(turnIndex)+" and is turn "+ str(current_turn.value)
+            string_error = "Error : Should be turn " + str(turnIndex) + " and is turn " + str(current_turn.value)
             tab_errors.append(string_error)
             syntactic_error = True
 
@@ -103,7 +105,7 @@ def p_white_comment(p):
     '''whiteComment : openingCharacter text simpleComment text closingCharacter TURN_AFTER_COMMENT
                     | empty'''
 
-    #check if opening == closing
+    # check if opening == closing
     p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2)])
 
 
@@ -113,16 +115,19 @@ def p_simple_comment(p):
     # check if opening == closing
     p[0] = Node(get_elem_in_slice(p, 1))
 
+
 def p_opening_character(p):
     '''openingCharacter : OPENING_PARENTHESIS
                         | OPENING_BRACE'''
+
 def p_text(p):
     '''text : TEXT
             | empty'''
+
 def p_closing_character(p):
     '''closingCharacter : CLOSING_PARENTHESIS
                         | CLOSING_BRACE'''
-    
+
 
 # Empty production
 def p_empty(p):
@@ -132,7 +137,6 @@ def p_empty(p):
 
 # Error rule for syntax errors
 def p_error(p):
-
     global parser
 
     if p:
@@ -145,7 +149,6 @@ def p_error(p):
 
 
 def test(text, filename):
-
     global syntactic_error, tab_errors, tree, turnIndex, parser
 
     # Build the parser
