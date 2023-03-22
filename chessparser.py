@@ -136,8 +136,7 @@ def p_error(p):
     global parser
 
     if p:
-        global syntactic_error
-        global tab_errors
+        global syntactic_error, tab_errors, parser
         syntactic_error = True
         tab_errors.append("Syntax error : " + p.type + ", " + p.value + " at line " + str(p.lineno))
         parser.errok()
