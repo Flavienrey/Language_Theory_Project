@@ -166,4 +166,4 @@ def test(text, filename):
 
     print("\n=== [File", filename, "verifications is done!] ===")
 
-    return tree
+    return tree, tab_errors
