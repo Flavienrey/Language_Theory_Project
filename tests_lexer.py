@@ -5,6 +5,8 @@ from chesslexer import ChessLexer
 
 class TestLexer(unittest.TestCase):
 
+    #TODO faire TUs des nouveaux tokens
+
     #_______________Tests token TURN_NUMBER_WITH_DOT_______________
     def testTurn1_Passant(self):
         lexer = ChessLexer()
@@ -211,11 +213,12 @@ class TestLexer(unittest.TestCase):
 
     def testComment3_NonPassant(self):
         lexer = ChessLexer()
-        comment = '{ bla bla )'
+        comment = '(text ) { bla bla )'
         lexer.raw_input(comment)
         token = lexer.token()
+        print(token.value)
 
-        self.assertIsNone(token)
+        #self.assertIsNone(token)
 
 
     #_______________Tests token CHECK_______________

@@ -1,7 +1,7 @@
 import ply.lex as lex
 
 # List of token names
-tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
+tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'TEXT', 'OPENING_PARENTHESIS', 'CLOSING_PARENTHESIS', 'OPENING_BRACE', 'CLOSING_BRACE', 'CHECK', 'CHECKMATE',
                        'DESCRIPTION', 'GRADE', 'CASTLING']
 
 class ChessLexer(object):
@@ -12,7 +12,11 @@ class ChessLexer(object):
     t_PIECE = r'[P|N|B|R|Q|K]'
     t_MOVE = r'[a-h]?[1-8]?[x]?[a-h][1-8]'
     t_RESULT = r'1\-0|0\-1|1\/2\-1\/2'
-    t_COMMENT = r'\{([^}]+)\} | \(([^)]+)\)'
+    t_TEXT = r'[a-zA-Z0-9_]'
+    t_OPENING_PARENTHESIS = r'\('
+    t_CLOSING_PARENTHESIS = r'\)'
+    t_OPENING_BRACE = r'\{'
+    t_CLOSING_BRACE = r'\}'
     t_CHECK = r'[+]'
     t_CHECKMATE = r'[+][+]'
     t_DESCRIPTION = r'\[[a-zA-Z0-9_]*\s\".*\"\]'
@@ -37,8 +41,8 @@ class ChessLexer(object):
 
     # Instantiate the class and build the lexer
     def __init__(self):
-        self.tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
-              'DESCRIPTION', 'GRADE', 'CASTLING']
+        self.tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'TEXT', 'OPENING_PARENTHESIS',
+                       'CLOSING_PARENTHESIS', 'OPENING_BRACE', 'CLOSING_BRACE', 'CHECK', 'CHECKMATE', 'DESCRIPTION', 'GRADE', 'CASTLING']
         self.lexical_error = False
         self.lexer = lex.lex(object=self)
         self.tab_errors = []
