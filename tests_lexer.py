@@ -7,7 +7,7 @@ class TestLexer(unittest.TestCase):
 
 
     #_______________Tests token TURN_NUMBER_WITH_DOT_______________
-    def testTurn1_Passant(self):
+    def testTurn1_OK(self):
         lexer = ChessLexer()
         turn = '1.'
         lexer.raw_input(turn)
@@ -17,7 +17,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "TURN_NUMBER_WITH_DOT")
         self.assertEqual(token.value, turn)
 
-    def testTurn2_Passant(self):
+    def testTurn2_OK(self):
         lexer = ChessLexer()
         turn = '322.'
         lexer.raw_input(turn)
@@ -27,7 +27,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "TURN_NUMBER_WITH_DOT")
         self.assertEqual(token.value, turn)
 
-    def testTurn3_NonPassant(self):
+    def testTurn3_KO(self):
         lexer = ChessLexer()
         turn_after = '0.'
         lexer.raw_input(turn_after)
@@ -35,7 +35,7 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNone(token)
 
-    def testTurn4_Passant(self):
+    def testTurn4_KO(self):
        lexer = ChessLexer()
        turn = '-3.'
        lexer.raw_input(turn)
@@ -47,7 +47,7 @@ class TestLexer(unittest.TestCase):
 
 
     #_______________Tests token TURN_AFTER_COMMENT_______________
-    def testTurnAfter1_Passant(self):
+    def testTurnAfter1_OK(self):
         lexer = ChessLexer()
         turn_after = '2...'
         lexer.raw_input(turn_after)
@@ -57,7 +57,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "TURN_AFTER_COMMENT")
         self.assertEqual(token.value, turn_after)
 
-    def testTurnAfter2_NonPassant(self):
+    def testTurnAfter2_KO(self):
         lexer = ChessLexer()
         turn_after = '0...'
         lexer.raw_input(turn_after)
@@ -65,7 +65,7 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNone(token)
 
-    def testTurnAfter3_NonPassant(self):
+    def testTurnAfter3_KO(self):
         lexer = ChessLexer()
         turn_after = '4..'
         lexer.raw_input(turn_after)
@@ -77,7 +77,7 @@ class TestLexer(unittest.TestCase):
 
 
     #_______________Tests token PIECE_______________
-    def testPiece1_Passant(self):
+    def testPiece1_OK(self):
         lexer = ChessLexer()
         piece = 'P'
         lexer.raw_input(piece)
@@ -87,7 +87,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "PIECE")
         self.assertEqual(token.value, piece)
 
-    def testPiece2_NonPassant(self):
+    def testPiece2_KO(self):
         lexer = ChessLexer()
         piece = 'p'
         lexer.raw_input(piece)
@@ -95,7 +95,7 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNot(token.type, "PIECE")
 
-    def testPiece3_NonPassant(self):
+    def testPiece3_KO(self):
         lexer = ChessLexer()
         piece = 'V'
         lexer.raw_input(piece)
@@ -105,7 +105,7 @@ class TestLexer(unittest.TestCase):
 
 
     #_______________Tests token MOVE_______________
-    def testMove1_Passant(self):
+    def testMove1_OK(self):
         lexer = ChessLexer()
         move = 'ad3'
         lexer.raw_input(move)
@@ -115,7 +115,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "MOVE")
         self.assertEqual(token.value, move)
 
-    def testMove2_Passant(self):
+    def testMove2_KO(self):
         lexer = ChessLexer()
         move = 'xf7'
         lexer.raw_input(move)
@@ -125,7 +125,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "MOVE")
         self.assertEqual(token.value, move)
 
-    def testMove3_NonPassant(self):
+    def testMove3_KO(self):
         lexer = ChessLexer()
         move = 'Ad3'
         lexer.raw_input(move)
@@ -133,7 +133,7 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNot(token.type, "MOVE")
 
-    def testMove4_NonPassant(self):
+    def testMove4_KO(self):
         lexer = ChessLexer()
         move = 'n4'
         lexer.raw_input(move)
@@ -143,7 +143,7 @@ class TestLexer(unittest.TestCase):
 
 
     #_______________Tests token RESULT_______________
-    def testResult1_Passant(self):
+    def testResult1_OK(self):
         lexer = ChessLexer()
         result = '0-1'
         lexer.raw_input(result)
@@ -153,7 +153,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "RESULT")
         self.assertEqual(token.value, result)
 
-    def testResult2_Passant(self):
+    def testResult2_OK(self):
         lexer = ChessLexer()
         result = '1/2-1/2'
         lexer.raw_input(result)
@@ -163,7 +163,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "RESULT")
         self.assertEqual(token.value, result)
 
-    def testResult3_NonPassant(self):
+    def testResult3_KO(self):
         lexer = ChessLexer()
         result = '1/ 2-1/2'
         lexer.raw_input(result)
@@ -171,7 +171,7 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNone(token)
 
-    def testResult4_NonPassant(self):
+    def testResult4_KO(self):
         lexer = ChessLexer()
         result = '1-1'
         lexer.raw_input(result)
@@ -181,7 +181,7 @@ class TestLexer(unittest.TestCase):
 
 
     #_______________Tests token CHECK_______________
-    def testCheck1_Passant(self):
+    def testCheck1_OK(self):
         lexer = ChessLexer()
         check = '+'
         lexer.raw_input(check)
@@ -190,7 +190,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "CHECK")
         self.assertEqual(token.value, check)
 
-    def testCheck2_Passant(self):
+    def testCheck2_OK(self):
         lexer = ChessLexer()
         check = 'a2+'
         lexer.raw_input(check)
@@ -202,7 +202,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "MOVE")
         self.assertEqual(token2.type, "CHECK")
 
-    def testCheck3_NonPassant(self):
+    def testCheck3_KO(self):
         lexer = ChessLexer()
         check = '++'
         lexer.raw_input(check)
@@ -212,7 +212,7 @@ class TestLexer(unittest.TestCase):
 
 
     #_______________Tests token CHECKMATE_______________
-    def testCheckmate1_Passant(self):
+    def testCheckmate1_OK(self):
         lexer = ChessLexer()
         checkmate = '++'
         lexer.raw_input(checkmate)
@@ -222,7 +222,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.value, checkmate)
 
 
-    def testCheckmate2_Passant(self):
+    def testCheckmate2_OK(self):
         lexer = ChessLexer()
         checkmate = 'b5++'
         lexer.raw_input(checkmate)
@@ -235,7 +235,7 @@ class TestLexer(unittest.TestCase):
 
 
     #_______________Tests token DESCRIPTION_______________
-    def testDescription1_Passant(self):
+    def testDescription1_OK(self):
         lexer = ChessLexer()
         description = '[Nzscf5qWgtgNVX "56BnnQIeAhy"]'
         lexer.raw_input(description)
@@ -245,7 +245,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "DESCRIPTION")
         self.assertEqual(token.value, description)
 
-    def testDescription2_Passant(self):
+    def testDescription2_OK(self):
         lexer = ChessLexer()
         description ='[test "crazy"]'
         lexer.raw_input(description)
@@ -255,7 +255,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "DESCRIPTION")
         self.assertEqual(token.value, description)
 
-    def testDescription3_NonPassant(self):
+    def testDescription3_KO(self):
         lexer = ChessLexer()
         description ='[test@ "crazy"]'
         lexer.raw_input(description)
@@ -263,7 +263,7 @@ class TestLexer(unittest.TestCase):
 
         self.assertIsNot(token.type, "DESCRIPTION")
 
-    def testDescription4_Passant(self):
+    def testDescription4_OK(self):
         lexer = ChessLexer()
         description ='[test "@crazy!"]'
         lexer.raw_input(description)
@@ -275,7 +275,7 @@ class TestLexer(unittest.TestCase):
 
 
 #_______________Tests token GRADE_______________
-    def testGrade1_Passant(self):
+    def testGrade1_OK(self):
         lexer = ChessLexer()
         grade = '?'
         lexer.raw_input(grade)
@@ -284,7 +284,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "GRADE")
         self.assertEqual(token.value, grade)
 
-    def testGrade2_Passant(self):
+    def testGrade2_OK(self):
         lexer = ChessLexer()
         grade = '!'
         lexer.raw_input(grade)
@@ -293,7 +293,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "GRADE")
         self.assertEqual(token.value, grade)
 
-    def testGrade3_NonPassant(self):
+    def testGrade3_KO(self):
         lexer = ChessLexer()
         grade = '.'
         lexer.raw_input(grade)
@@ -303,7 +303,7 @@ class TestLexer(unittest.TestCase):
 
 
 #_______________Tests token CASTLING_______________
-    def testCastling1_Passant(self):
+    def testCastling1_OK(self):
         lexer = ChessLexer()
         castling = 'O-O'
         lexer.raw_input(castling)
@@ -312,7 +312,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "CASTLING")
         self.assertEqual(token.value, castling)
 
-    def testCastling2_Passant(self):
+    def testCastling2_OK(self):
         lexer = ChessLexer()
         castling = 'O-O-O'
         lexer.raw_input(castling)
@@ -321,7 +321,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "CASTLING")
         self.assertEqual(token.value, castling)
 
-    def testCastling3_NonPassant(self):
+    def testCastling3_KO(self):
         lexer = ChessLexer()
         castling = '0-O'
         lexer.raw_input(castling)
@@ -331,7 +331,7 @@ class TestLexer(unittest.TestCase):
 
 
     #_______________Tests COMMENT (tokens : TEXT, OPENING_PARENTHESIS,CLOSING_PARENTHESIS, OPENING_BRACE, CLOSING_BRACE _______________
-    def testComment1_Passant(self):
+    def testComment1_OK(self):
         lexer = ChessLexer()
         comment = '(test xd4)'
         lexer.raw_input(comment)
@@ -344,7 +344,7 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token3.type, "MOVE")
         self.assertEqual(token4.type, "CLOSING_PARENTHESIS")
 
-    def testComment2_Passant(self):
+    def testComment2_OK(self):
         lexer = ChessLexer()
         comment = '{ ( bla ) }'
         lexer.raw_input(comment)
