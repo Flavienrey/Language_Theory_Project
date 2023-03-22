@@ -110,7 +110,7 @@ def p_white_comment(p):
 
 
 def p_simple_comment(p):
-    '''simpleComment : openingCharacter text simpleComment text closingCharacter
+    '''simpleComment : openingCharacter eventText simpleComment eventText closingCharacter
                      | empty'''
     # check if opening == closing
     p[0] = Node(get_elem_in_slice(p, 1))
@@ -120,6 +120,9 @@ def p_opening_character(p):
     '''openingCharacter : OPENING_PARENTHESIS
                         | OPENING_BRACE'''
 
+def p_eventText(p):
+    '''text : TEXT
+                | empty'''
 def p_text(p):
     '''text : TEXT
             | empty'''
