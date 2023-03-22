@@ -1,69 +1,104 @@
 from chesslexer import ChessLexer
+from node import Node
 
 syntactic_error = None
 tab_errors = []
+tree = None
+
+
+def get_elem_in_slice(p, index):
+    if index < len(p.slice):
+        return p.slice[index]
+    return None
+
 
 def p_start(p):
     '''start : game'''
-    #print("start")
+    global tree
+    tree = Node(get_elem_in_slice(p, 1))
+    print("start")
+
 
 def p_game(p):
     '''game : eventDescriptor turn RESULT game
             | empty'''
-    #print("game")
+    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4)])
+    print("game")
+
 
 def p_event_descriptor(p):
     '''eventDescriptor : DESCRIPTION eventDescriptor
                        | empty'''
-    #print("eventDescriptor")
+
+    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2)])
+    print("eventDescriptor")
+
 
 def p_turn(p):
     '''turn : TURN_NUMBER_WITH_DOT whiteMove eventGrade whiteComment blackMove eventGrade blackComment  turn
             | empty'''
-    #print("turn")
+    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
+                 get_elem_in_slice(p, 5), get_elem_in_slice(p, 6), get_elem_in_slice(p, 7), get_elem_in_slice(p, 8)])
+    print("turn")
+
 
 def p_event_grade(p):
     '''eventGrade : GRADE
                   | empty'''
-    #print("grade")
+    p[0] = Node(get_elem_in_slice(p, 1))
+    print("grade")
+
 
 def p_white_move(p):
     '''whiteMove : eventPiece MOVE eventCheck
                  | CASTLING'''
-    #print("whiteMove")
+    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3)])
+    print("whiteMove")
+
 
 def p_black_move(p):
     '''blackMove : eventPiece MOVE eventCheck
                  | CASTLING
                  | empty'''
-    #print("blackMove")
+    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3)])
+    print("blackMove")
+
 
 def p_event_piece(p):
     '''eventPiece : PIECE
                 | empty'''
-    #print("eventPiece")
+    p[0] = Node(get_elem_in_slice(p, 1))
+    print("eventPiece")
+
 
 def p_event_check(p):
     '''eventCheck : CHECK
                   | CHECKMATE
                   | empty'''
-    #print("eventCheck")
+    p[0] = Node(get_elem_in_slice(p, 1))
+    print("eventCheck")
 
 
 def p_white_comment(p):
     '''whiteComment : COMMENT TURN_AFTER_COMMENT
                     | empty'''
-    #print("whiteComment")
+    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2)])
+    print("whiteComment")
+
 
 def p_black_comment(p):
     '''blackComment : COMMENT
                     | empty'''
-    #print("blackComment")
+    p[0] = Node(get_elem_in_slice(p, 1))
+    print("blackComment")
+
 
 # Empty production
 def p_empty(p):
     '''empty :'''
-    #print("empty")
+    p[0] = None
+    # print("empty")
+
 
 # Error rule for syntax errors
 def p_error(p):
@@ -71,9 +106,10 @@ def p_error(p):
         global syntactic_error
         global tab_errors
         syntactic_error = True
-        tab_errors.append("Syntax error : "+ p.type + ", " + p.value +" at line " + str(p.lineno))
+        tab_errors.append("Syntax error : " + p.type + ", " + p.value + " at line " + str(p.lineno))
     else:
         print("Syntax error at EOF")
+
 
 def test(parser, text, filename):
     print("\n=== [Current file tested :", filename, "] ===")
@@ -98,3 +134,6 @@ def test(parser, text, filename):
         print("[Correct syntactic analysis]")
 
     print("\n=== [File", filename, "verifications is done!] ===")
+
+    global tree
+    return tree
