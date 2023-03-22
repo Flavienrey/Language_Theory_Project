@@ -5,7 +5,6 @@ from chesslexer import ChessLexer
 
 class TestLexer(unittest.TestCase):
 
-    #TODO faire TUs des nouveaux tokens
 
     #_______________Tests token TURN_NUMBER_WITH_DOT_______________
     def testTurn1_Passant(self):
@@ -94,7 +93,7 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(piece)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertIsNot(token.type, "PIECE")
 
     def testPiece3_NonPassant(self):
         lexer = ChessLexer()
@@ -102,7 +101,7 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(piece)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertIsNot(token.type, "PIECE")
 
 
     #_______________Tests token MOVE_______________
@@ -140,7 +139,7 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(move)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertIsNot(token.type, "MOVE")
 
 
     #_______________Tests token RESULT_______________
@@ -179,46 +178,6 @@ class TestLexer(unittest.TestCase):
         token = lexer.token()
 
         self.assertIsNone(token)
-
-    #_______________Tests token COMMENT_______________
-    def testComment1_Passant(self):
-        lexer = ChessLexer()
-        comment = '(jflzjesl& 4. ! xd4)'
-        lexer.raw_input(comment)
-        token = lexer.token()
-
-        self.assertEqual(token.type, "COMMENT")
-        self.assertEqual(token.value, comment)
-
-    def testComment2_Passant(self):
-        lexer = ChessLexer()
-        comment = '{ bla bla (jflzjesl& 4. ! xd4) bla bla}'
-        lexer.raw_input(comment)
-        token = lexer.token()
-
-        self.assertEqual(token.type, "COMMENT")
-        self.assertEqual(token.value, comment)
-
-    def testComment3_Passant(self):
-        lexer = ChessLexer()
-        comment = '(Ka4 h 5a2) (a)'
-        lexer.raw_input(comment)
-        token = lexer.token()
-        token2 = lexer.token()
-
-        self.assertEqual(token.type, "COMMENT")
-        self.assertEqual(token.value, '(Ka4 h 5a2)')
-        self.assertEqual(token2.type, "COMMENT")
-        self.assertEqual(token2.value, '(a)')
-
-    def testComment3_NonPassant(self):
-        lexer = ChessLexer()
-        comment = '(text ) { bla bla )'
-        lexer.raw_input(comment)
-        token = lexer.token()
-        print(token.value)
-
-        #self.assertIsNone(token)
 
 
     #_______________Tests token CHECK_______________
@@ -302,7 +261,7 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(description)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertIsNot(token.type, "DESCRIPTION")
 
     def testDescription4_Passant(self):
         lexer = ChessLexer()
@@ -368,8 +327,41 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(castling)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertIsNot(token.type, "CASTLING")
 
+
+    #_______________Tests COMMENT (tokens : TEXT, OPENING_PARENTHESIS,CLOSING_PARENTHESIS, OPENING_BRACE, CLOSING_BRACE _______________
+    def testComment1_Passant(self):
+        lexer = ChessLexer()
+        comment = '(test xd4)'
+        lexer.raw_input(comment)
+        token1 = lexer.token()
+        token2 = lexer.token()
+        token3 = lexer.token()
+        token4 = lexer.token()
+        self.assertEqual(token1.type, "OPENING_PARENTHESIS")
+        self.assertEqual(token2.type, "TEXT")
+        self.assertEqual(token3.type, "MOVE")
+        self.assertEqual(token4.type, "CLOSING_PARENTHESIS")
+
+    def testComment2_Passant(self):
+        lexer = ChessLexer()
+        comment = '{ ( bla ) }'
+        lexer.raw_input(comment)
+        token1 = lexer.token()
+        token2 = lexer.token()
+        token3 = lexer.token()
+        token4 = lexer.token()
+        token5 = lexer.token()
+        self.assertEqual(token1.type, "OPENING_BRACE")
+        self.assertEqual(token2.type, "OPENING_PARENTHESIS")
+        self.assertEqual(token3.type, "TEXT")
+        self.assertEqual(token4.type, "CLOSING_PARENTHESIS")
+        self.assertEqual(token5.type, "CLOSING_BRACE")
+
+
+
+    #_______________Tests token TEXT_______________
 
 # Launch all test units
 if __name__ == '__main__':
