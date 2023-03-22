@@ -197,6 +197,18 @@ class TestLexer(unittest.TestCase):
         self.assertEqual(token.type, "COMMENT")
         self.assertEqual(token.value, comment)
 
+    def testComment3_Passant(self):
+        lexer = ChessLexer()
+        comment = '(Ka4 h 5a2) (a)'
+        lexer.raw_input(comment)
+        token = lexer.token()
+        token2 = lexer.token()
+
+        self.assertEqual(token.type, "COMMENT")
+        self.assertEqual(token.value, '(Ka4 h 5a2)')
+        self.assertEqual(token2.type, "COMMENT")
+        self.assertEqual(token2.value, '(a)')
+
     def testComment3_NonPassant(self):
         lexer = ChessLexer()
         comment = '{ bla bla )'
@@ -204,6 +216,7 @@ class TestLexer(unittest.TestCase):
         token = lexer.token()
 
         self.assertIsNone(token)
+
 
     #_______________Tests token CHECK_______________
     def testCheck1_Passant(self):

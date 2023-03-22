@@ -1,10 +1,5 @@
 import sys
-from ply import yacc
 from chessparser import *
-
-# List of token names
-tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
-          'DESCRIPTION', 'GRADE', 'CASTLING']
 
 if __name__ == '__main__':
 
@@ -31,8 +26,5 @@ if __name__ == '__main__':
         with open(file, 'r') as data:
             inputs.append(data.read())
 
-    # Build the parser
-    parser = yacc.yacc(debug=True)
-
     for index, currentInput in enumerate(inputs):
-        test(parser, currentInput, filenames[index])
+        test(currentInput, filenames[index])

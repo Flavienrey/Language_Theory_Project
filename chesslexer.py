@@ -12,7 +12,7 @@ class ChessLexer(object):
     t_PIECE = r'[P|N|B|R|Q|K]'
     t_MOVE = r'[a-h]?[1-8]?[x]?[a-h][1-8]'
     t_RESULT = r'1\-0|0\-1|1\/2\-1\/2'
-    t_COMMENT = r'\{.*\}|\(.*\)'
+    t_COMMENT = r'\{([^}]+)\} | \(([^)]+)\)'
     t_CHECK = r'[+]'
     t_CHECKMATE = r'[+][+]'
     t_DESCRIPTION = r'\[[a-zA-Z0-9_]*\s\".*\"\]'
