@@ -172,7 +172,7 @@ def p_error(p):
     if p:
         global syntactic_error, tab_errors, parser
         syntactic_error = True
-        tab_errors.append("Syntax error : " + p.type + ", " + p.value + " at line " + str(p.lineno))
+        tab_errors.append("Syntax error : " + p.type + " " + p.value + " not allowed at line " + str(p.lineno))
         parser.errok()
     else:
         print("Syntax error at EOF")
