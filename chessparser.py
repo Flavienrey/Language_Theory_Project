@@ -52,16 +52,16 @@ def p_turn(p):
         if turnIndex is None:
             turnIndex = int(current_turn.value.split('.')[0])
 
-        if current_turn.value == str(turnIndex) + '.':
+        if current_turn.value != str(turnIndex) + '.':
+            string_error = "Turn " + str(turnIndex) + " missing"
+            tab_errors.append(string_error)
+            syntactic_error = True
+            turnIndex -= 1
+
+        else:
             p[0] = Node(
                 [get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
                  get_elem_in_slice(p, 5), get_elem_in_slice(p, 6), get_elem_in_slice(p, 7), get_elem_in_slice(p, 8)])
-
-        else:
-
-            string_error = "Error : Turn " + str(turnIndex) + " missing, we got turn " + str(current_turn.value)
-            tab_errors.append(string_error)
-            syntactic_error = True
 
         turnIndex -= 1
 

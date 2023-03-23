@@ -5,8 +5,8 @@ from chessparser import *
 
 tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
                        'DESCRIPTION', 'GRADE', 'CASTLING']
+FILENAME = "Unit tests parser"
 """ Unit tests class"""
-
 class TestParser(unittest.TestCase):
     #TODO: TU
     #Game               : OK
@@ -18,9 +18,9 @@ class TestParser(unittest.TestCase):
 
     #_______________Tests production Game_______________
     def testGame1_OK(self):
-        input = "[bob \"foo\"] 1. d5 e1 1-0"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "[bob \"foo\"] 1. d5 e1 1-0"
+        result, tab_errors  = chessparser.test(_input, FILENAME)
+
         self.assertEqual(result.children.type, "game")
         self.assertEqual(result.children.value.children[0].type, "eventDescriptor")
         self.assertIsNotNone(result.children.value.children[0].value.children[0].value)
@@ -32,9 +32,9 @@ class TestParser(unittest.TestCase):
         self.assertEqual(len(tab_errors),0)
 
     def testGame2_OK(self):
-        input = "[bob \"foo\"] 1. d5 e1 2. a3 b7 1-0 1. d5 e1 2. a3 b7 1/2-1/2"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "[bob \"foo\"] 1. d5 e1 2. a3 b7 1-0 1. d5 e1 2. a3 b7 1/2-1/2"
+        result, tab_errors  = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.type, "game")
         self.assertEqual(result.children.value.children[0].type, "eventDescriptor")
         self.assertIsNotNone(result.children.value.children[0].value.children[0].value)
@@ -47,9 +47,9 @@ class TestParser(unittest.TestCase):
         self.assertEqual(len(tab_errors),0)
 
     def testGame3_KO(self):
-        input = "[bob \"foo\"] 1. d5 e1 a2 1-0"
-        result, tab_errors = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "[bob \"foo\"] 1. d5 e1 a2 1-0"
+        result, tab_errors = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.type, "game")
         self.assertEqual(result.children.value.children[0].type, "eventDescriptor")
         self.assertEqual(result.children.value.children[1].type, "turn")
@@ -62,17 +62,17 @@ class TestParser(unittest.TestCase):
 
     #_______________Tests production EventDescriptor_______________
     def testEventDescriptor1_OK(self):
-        input = "[bob \"foo\"] 1. d5 e1 2. b4 e3 1-0"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "[bob \"foo\"] 1. d5 e1 2. b4 e3 1-0"
+        result, tab_errors  = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[0].type, "eventDescriptor")
         self.assertEqual(result.children.value.children[0].value.children[0].value, "[bob \"foo\"]")
         self.assertEqual(len(tab_errors),0)
 
     def testEventDescriptor2_KO(self):
-        input = "1. [bob \"foo\"] d5 e1 2. b4 e3 1-0"
-        result, tab_errors = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "1. [bob \"foo\"] d5 e1 2. b4 e3 1-0"
+        result, tab_errors = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[0].type, "eventDescriptor")
         self.assertIsNone(result.children.value.children[0].value.children[0].value)
         self.assertIsNot(tab_errors[0].find("DESCRIPTION"),-1)
@@ -80,29 +80,29 @@ class TestParser(unittest.TestCase):
 
     #_______________Tests production Turn_______________
     def testTurn1_OK(self):
-        input = "1. d5 e1 2. b4 e3 3. b1 c6 1-0"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "1. d5 e1 2. b4 e3 3. b1 c6 1-0"
+        result, tab_errors  = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[1].type, "turn")
         self.assertIsNotNone(result.children.value.children[1].value.children[7].value)
         self.assertIsNotNone(result.children.value.children[1].value.children[7].value.children[7].value)
         self.assertEqual(result.children.value.children[1].value.children[7].value.children[7].value.children[0].value, "3.")
         self.assertEqual(len(tab_errors),0)
 
-    def testTurn2_KO(self): #TODO: A REVOIR
-        input = "1. d5 e1 2. b4 e3 4. b1 c6 1-0"
-        result, tab_errors = chessparser.test(input,"Unit tests parser")
-        print("result ")
+    def testTurn2_KO(self):
+        _input = "1. d5 e1 2. b4 e3 4. b1 c6 1-0"
+        result, tab_errors = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[1].type, "turn")
-        self.assertIsNone(result.children.value.children[1].value)
-        self.assertIsNot(tab_errors[0].find("TURN"),-1)
-        self.assertIsNot(tab_errors[0].find("4."),1)
+        self.assertIsNotNone(result.children.value.children[1].value)
+        self.assertEqual(tab_errors[0],'Turn 3 missing')
+        self.assertEqual(len(tab_errors), 1)
 
     #_______________Tests production WhiteAnBlackMove_______________
     def testWhiteAndBlackMove1_OK(self):
-        input = "1. d5 Pe1 1-0"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "1. d5 Pe1 1-0"
+        result, tab_errors  = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[1].type, "turn")
         self.assertEqual(result.children.value.children[1].value.children[1].value.children[0].type, "eventPiece")
         self.assertIsNotNone(result.children.value.children[1].value.children[1].value.children[0].value)
@@ -119,9 +119,9 @@ class TestParser(unittest.TestCase):
         self.assertEqual(len(tab_errors),0)
 
     def testWhiteAndBlackMove2_KO(self): #TODO: A REVOIR
-        input = "1. d5 eP1 1-0"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "1. d5 eP1 1-0"
+        result, tab_errors  = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[1].type, "turn")
         self.assertEqual(result.children.value.children[1].value.children[1].value.children[0].type, "eventPiece")
         self.assertIsNotNone(result.children.value.children[1].value.children[1].value.children[0].value)
@@ -136,9 +136,9 @@ class TestParser(unittest.TestCase):
 
     #_______________Tests production WhiteComment_______________
     def testWhiteComment1_OK(self): #TODO: Les caratères spéciaux ne passent pas
-        input = "1. d5 {er. !f 10%e ff} 1... Pe1 1-0"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "1. d5 {er. !f 10%e ff} 1... Pe1 1-0"
+        result, tab_errors  = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[1].value.children[3].value.children[0].type, "openningCharacter")
         self.assertIsNotNone(result.children.value.children[1].value.children[3].value.children[0].value)
         self.assertEqual(result.children.value.children[1].value.children[3].value.children[1].type, "eventData")
@@ -154,9 +154,9 @@ class TestParser(unittest.TestCase):
         self.assertEqual(len(tab_errors[0]))
 
     def testWhiteComment2_KO(self):
-        input = "1. d5 (er. !f 10%e ff} 1... Qa1 1-0"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "1. d5 (er. !f 10%e ff} 1... Qa1 1-0"
+        result, tab_errors  = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[1].value.children[6].value.children[0].type, "openningCharacter")
         self.assertIsNotNone(result.children.value.children[1].value.children[6].value.children[0].value)
         self.assertEqual(result.children.value.children[1].value.children[6].value.children[1].type, "eventData")
@@ -173,9 +173,9 @@ class TestParser(unittest.TestCase):
 
     #_______________Tests production SimpleComment_______________
     def testSimpleComment1_OK(self):
-        input = "1. d5 Pe1 {(0-f it's) ff.} 1-0"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "1. d5 Pe1 {(0-f it's) ff.} 1-0"
+        result, tab_errors  = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[1].value.children[6].value.children[0].type, "openningCharacter")
         self.assertIsNotNone(result.children.value.children[1].value.children[6].value.children[0].value)
         self.assertEqual(result.children.value.children[1].value.children[6].value.children[1].type, "eventData")
@@ -191,9 +191,9 @@ class TestParser(unittest.TestCase):
         self.assertEqual(len(tab_errors[0]))
 
     def testSimpleComment2_KO(self):
-        input = "1. d5 Pe1 {0-f it's ff.) 1-0"
-        result, tab_errors  = chessparser.test(input,"Unit tests parser")
-        print("result ")
+        _input = "1. d5 Pe1 {0-f it's ff.) 1-0"
+        result, tab_errors  = chessparser.test(_input,FILENAME)
+
         self.assertEqual(result.children.value.children[1].value.children[6].value.children[0].type, "openningCharacter")
         self.assertIsNotNone(result.children.value.children[1].value.children[6].value.children[0].value)
         self.assertEqual(result.children.value.children[1].value.children[6].value.children[1].type, "eventData")
