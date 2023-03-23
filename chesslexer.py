@@ -93,9 +93,9 @@ class ChessLexer(object):
 
     # Error handling rule
     def t_error(self, t):
-        self.tab_errors.append("Illegal character '%s' at line %d" % (t.value[0] ,t.lexer.lineno))
+        error = "Illegal character '%s' at line %d" % (t.value[0] ,t.lexer.lineno)
+        print(Colors.FAIL + error + Colors.ENDC)
         t.lexer.skip(1)
-        self.lexical_error = True
 
 
     # Instantiate the class and build the lexer
@@ -120,24 +120,7 @@ class ChessLexer(object):
     # Test the input
     def input(self, text):
 
-        # Variables initialization
-        self.lexical_error = False
         self.lexer.input(text)
-
-        print("\n[Lexical analysis started]")
-
-        # Final test to print if an error was found or not
-        if self.lexical_error:
-
-            print("\n" + Colors.WARNING  + "!!! [List of errors] !!!" + Colors.ENDC)
-
-            for error in self.tab_errors:
-                print(Colors.FAIL + error + Colors.ENDC)
-
-            print(Colors.WARNING  + "[Error during the lexical analysis]" + Colors.ENDC + "\n")
-
-        else:
-            print(Colors.OKGREEN + "[Correct lexical analysis]" + Colors.ENDC)
 
         # Add the input again for the parser to execute correctly
         self.lexer.input(text)
