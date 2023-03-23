@@ -15,21 +15,28 @@ turnIndex = None
 parser = None
 
 
+# Function used to get an element in the tree based on its index
+# Allows us to not "index out of range" if the element is not present
+# Much safer overall
 def get_elem_in_slice(p, index):
     if index < len(p.slice):
         return p.slice[index]
     return None
 
 
+# Function used to determine at the end of the game/file if some turns have been omitted
 def check_if_missing_turns_after_file():
     global turnIndex, syntactic_error
 
+    # If turnIndex is not None or >= to 1, some turns are missing in the file
     if None != turnIndex >= 1:
 
-        for i in range(1, turnIndex+1):
+        # We print each missing turn
+        for i in range(1, turnIndex + 1):
             string_error = "Turn " + str(i) + " missing"
             tab_errors.append(string_error)
 
+        # We tell the program that there is an error
         syntactic_error = True
         turnIndex = None
 
@@ -73,7 +80,9 @@ def p_turn(p):
         if turnIndex is None:
             turnIndex = int(current_turn.value.split('.')[0])
 
-        for _ in range(turnIndex,-1, -1):
+        # We iterate over the values that we need till the end of the file
+        # If we get the first one, we break, otherwise we indicate its missing and continue until finding one
+        for _ in range(turnIndex, -1, -1):
 
             # If expected turn is different from what we got, we raise an error and decrease to the next turn
             if current_turn.value != str(turnIndex) + '.':
