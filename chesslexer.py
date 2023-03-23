@@ -1,4 +1,5 @@
 import ply.lex as lex
+from colors import Colors
 
 # List of token names
 tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'TEXT', 'OPENING_PARENTHESIS', 'CLOSING_PARENTHESIS', 'OPENING_BRACE', 'CLOSING_BRACE', 'CHECK', 'CHECKMATE',
@@ -75,15 +76,15 @@ class ChessLexer(object):
         # Final test to print if an error was found or not
         if self.lexical_error:
 
-            print("\n!!! [List of errors] !!!")
+            print("\n" + Colors.WARNING  + "!!! [List of errors] !!!" + Colors.ENDC)
 
             for error in self.tab_errors:
-                print('\033[91m' + error + '\033[0m')
+                print(Colors.FAIL + error + Colors.ENDC)
 
-            print("[Error during the lexical analysis]\n")
+            print(Colors.WARNING  + "[Error during the lexical analysis]" + Colors.ENDC + "\n")
 
         else:
-            print("[Correct lexical analysis]\n")
+            print(Colors.OKGREEN + "[Correct lexical analysis]" + Colors.ENDC)
 
         # Add the input again for the parser to execute correctly
         self.lexer.input(text)

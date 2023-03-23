@@ -1,6 +1,7 @@
 from ply import yacc
 from chesslexer import ChessLexer
 from node import Node
+from colors import Colors
 
 # List of token names
 tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'TEXT', 'OPENING_PARENTHESIS',
@@ -193,22 +194,22 @@ def test(text, filename):
 
     parser.parse(text, lexer=lexer)
 
-    print("[Syntactic analysis started]")
+    print("\n[Syntactic analysis started]")
 
     check_if_missing_turns_after_file()
 
     # Final test to print if an error was found or not
     if syntactic_error:
 
-        print("!!! [List of errors] !!!")
+        print(Colors.WARNING + "!!! [List of errors] !!!" + Colors.ENDC)
 
         for error in tab_errors:
-            print('\033[91m' + error + '\033[0m')
+            print(Colors.FAIL + error + Colors.ENDC)
 
-        print("[Error during the syntactic analysis]")
+        print(Colors.WARNING  + "[Error during the syntactic analysis]" + Colors.ENDC + "\n")
 
     else:
-        print("[Correct syntactic analysis]")
+        print(Colors.OKGREEN + "[Correct syntactic analysis]" + Colors.ENDC)
 
     print("\n=== [File", filename, "verifications is done!] ===")
 
