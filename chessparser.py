@@ -207,7 +207,7 @@ def test(text, filename):
     tree = None
     turnIndex = None
 
-    print("=== [Current file tested :", filename, "] ===")
+    print("\n=== [Current file tested :", filename, "] ===")
     print("[Analysis started]")
 
     lexer = ChessLexer()
@@ -222,7 +222,7 @@ def test(text, filename):
         for error in tab_errors:
             print(Colors.FAIL + error + Colors.ENDC)
 
-        print(Colors.WARNING + "[Error during the syntactic analysis]" + Colors.ENDC + "\n")
+        print(Colors.WARNING + "[Error during the syntactic analysis]" + Colors.ENDC)
 
     else:
         print(Colors.OKGREEN + "[Correct syntactic analysis]" + Colors.ENDC)

@@ -12,7 +12,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 1:
         # No file has been given as an argument, we check our test files
         filenames = ['inputs/input1.txt','inputs/input2.txt','inputs/input3.txt','inputs/input4.txt','inputs/input5.txt']
-        print("No file given, by default we check input1.txt\n")
+        print("No file given, by default we check our test files.txt\n")
     else:
         # Load the input files
         # The file names are given, we have to format them so that our parser can find them
