@@ -208,19 +208,16 @@ def test(text, filename):
     turnIndex = None
 
     print("\n=== [Current file tested :", filename, "] ===")
+    print("\n[Analysis started]")
 
     lexer = ChessLexer()
 
     parser.parse(text, lexer=lexer)
 
-    print("\n[Syntactic analysis started]")
-
     check_if_missing_turns_after_file()
 
     # Final test to print if an error was found or not
     if syntactic_error:
-
-        print(Colors.WARNING + "!!! [List of errors] !!!" + Colors.ENDC)
 
         for error in tab_errors:
             print(Colors.FAIL + error + Colors.ENDC)

@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     if len(sys.argv) == 1:
         # no file given, we check our file test
-        filenames = ['inputs/input3.txt']  # ,'inputs/input2.txt']
+        filenames = ['inputs/input5.txt']  # ,'inputs/input2.txt']
         print("No file given, by default we check input1.txt")
     else:
         # Load the input files
