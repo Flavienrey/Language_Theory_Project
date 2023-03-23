@@ -3,9 +3,8 @@ from chesslexer import ChessLexer
 from node import Node
 
 # List of token names
-tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'TEXT', 'OPENING_PARENTHESIS',
-          'CLOSING_PARENTHESIS', 'OPENING_BRACE', 'CLOSING_BRACE', 'CHECK', 'CHECKMATE',
-          'DESCRIPTION', 'GRADE', 'CASTLING']
+tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'OPENING_PARENTHESIS', 'CLOSING_PARENTHESIS', 'OPENING_BRACE', 'CLOSING_BRACE', 'CHECK', 'CHECKMATE',
+                       'DESCRIPTION', 'GRADE', 'CASTLING', 'TEXT']
 
 syntactic_error = None
 tab_errors = []
