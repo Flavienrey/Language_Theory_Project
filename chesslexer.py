@@ -72,15 +72,17 @@ class ChessLexer(object):
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
         return t
 
+    def t_CHECKMATE(self,t):
+        r'[+][+]'
+        print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
+
     def t_CHECK(self,t):
         r'[+]'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
         return t
 
-    def t_CHECKMATE(self,t):
-        r'[+][+]'
-        print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
-        return t
+
 
     def t_DESCRIPTION(self,t):
         r'\[[a-zA-Z0-9_]*\s\".*\"\]'
@@ -101,8 +103,6 @@ class ChessLexer(object):
         r'[a-zA-Z0-9_\-\.\'\%\,\;\:]+'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
         return t
-
-
 
     # Define a rule so we can track line numbers
     def t_NEW_LINE(self, t):
@@ -128,12 +128,10 @@ class ChessLexer(object):
     # Feeds the text into the lexer
     def raw_input(self, text):
         self.lexer.input(text)
-        print("in raw_input")
 
 
     # Returns the next token in the lexer
     def token(self):
-        print("in token function", self.lexer.token())
         return self.lexer.token()
 
 
