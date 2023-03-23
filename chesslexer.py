@@ -10,30 +10,13 @@ class ChessLexer(object):
 # A string containing ignored characters (spaces and tabs)
     t_ignore = ' \t'
 
-    # Regular expression rules for simple tokens
-   # t_TURN_NUMBER_WITH_DOT = r'[1-9][0-9]*\.'
-    #t_TURN_AFTER_COMMENT = r'[1-9][0-9]*\.{3}'
-    #t_PIECE = r'[P|N|B|R|Q|K]'
-    #t_MOVE = r'[a-h]?[1-8]?[x]?[a-h][1-8]'
-    #t_RESULT = r'1\-0|0\-1|1\/2\-1\/2'
-    #t_OPENING_PARENTHESIS = r'\('
-    #t_CLOSING_PARENTHESIS = r'\)'
-    #t_OPENING_BRACE = r'\{'
-    #t_CLOSING_BRACE = r'\}'
-    #t_CHECK = r'[+]'
-    #t_CHECKMATE = r'[+][+]'
-    #t_DESCRIPTION = r'\[[a-zA-Z0-9_]*\s\".*\"\]'
-    #t_GRADE = r'[\?|\!]'
-    #t_CASTLING = r'O\-O(\-O)?'
-    #t_TEXT = r'[a-zA-Z0-9_\-\.]'
+    def t_TURN_AFTER_COMMENT(self, t):
+        r'[1-9][0-9]*\.{3}'
+        print("Token : ", t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_TURN_NUMBER_WITH_DOT(self,t):
         r'[1-9][0-9]*\.'
-        print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
-        return t
-
-    def t_TURN_AFTER_COMMENT(self,t):
-        r'[1-9][0-9]*\.{3}'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
         return t
 
@@ -81,8 +64,6 @@ class ChessLexer(object):
         r'[+]'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
         return t
-
-
 
     def t_DESCRIPTION(self,t):
         r'\[[a-zA-Z0-9_]*\s\".*\"\]'
@@ -143,12 +124,6 @@ class ChessLexer(object):
         self.lexer.input(text)
 
         print("\n[Lexical analysis started]")
-
-        # We iterate over the input to read tokens
-        #for current_token in self.lexer:
-        #    print("here")
-        #    print(current_token)
-
 
         # Final test to print if an error was found or not
         if self.lexical_error:

@@ -170,7 +170,7 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(result)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertEqual(token.type, "TEXT")
 
     def testResult4_KO(self):
         lexer = ChessLexer()
