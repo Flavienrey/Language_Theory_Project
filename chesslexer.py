@@ -30,62 +30,77 @@ class ChessLexer(object):
     def t_TURN_NUMBER_WITH_DOT(self,t):
         r'[1-9][0-9]*\.'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_TURN_AFTER_COMMENT(self,t):
         r'[1-9][0-9]*\.{3}'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_PIECE(self,t):
         r'[P|N|B|R|Q|K]'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_MOVE(self,t):
         r'[a-h]?[1-8]?[x]?[a-h][1-8]'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_RESULT(self,t):
         r'1\-0|0\-1|1\/2\-1\/2'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_OPENING_PARENTHESIS(self,t):
         r'\('
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_CLOSING_PARENTHESIS(self,t):
         r'\)'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_OPENING_BRACE(self,t):
         r'\{'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_CLOSING_BRACE(self,t):
         r'\}'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_CHECK(self,t):
         r'[+]'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_CHECKMATE(self,t):
         r'[+][+]'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_DESCRIPTION(self,t):
         r'\[[a-zA-Z0-9_]*\s\".*\"\]'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_GRADE(self,t):
         r'[\?|\!]'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_CASTLING(self,t):
         r'O\-O(\-O)?'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
     def t_TEXT(self,t):
         r'[a-zA-Z0-9_\-\.\'\%\,\;\:]+'
         print("Token : ",t.type, "  value : ", t.value, " at line ", t.lexer.lineno)
+        return t
 
 
 
@@ -132,9 +147,9 @@ class ChessLexer(object):
         print("\n[Lexical analysis started]")
 
         # We iterate over the input to read tokens
-        for current_token in self.lexer:
-            print("here")
-            print(current_token)
+        #for current_token in self.lexer:
+        #    print("here")
+        #    print(current_token)
 
 
         # Final test to print if an error was found or not
