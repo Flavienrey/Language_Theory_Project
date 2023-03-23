@@ -14,9 +14,9 @@ class TestLexer(unittest.TestCase):
         token = lexer.token()
         print("in test, token : ", token)
 
-        #self.assertIsNotNone(token)
-        #self.assertEqual(token.type, "TURN_NUMBER_WITH_DOT")
-        #self.assertEqual(token.value, turn)
+        self.assertIsNotNone(token)
+        self.assertEqual(token.type, "TURN_NUMBER_WITH_DOT")
+        self.assertEqual(token.value, turn)
 
     def testTurn2_OK(self):
         lexer = ChessLexer()
@@ -34,7 +34,7 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(turn_after)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertEqual(token.type, "TEXT")
 
     def testTurn4_KO(self):
        lexer = ChessLexer()
@@ -42,9 +42,7 @@ class TestLexer(unittest.TestCase):
        lexer.raw_input(turn)
        token = lexer.token()
 
-       self.assertIsNotNone(token)
-       self.assertEqual(token.type, "TURN_NUMBER_WITH_DOT")
-       self.assertEqual(token.value, '3.')
+       self.assertEqual(token.type, "TEXT")
 
 
     #_______________Tests token TURN_AFTER_COMMENT_______________
@@ -64,7 +62,7 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(turn_after)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertEqual(token.type, "TEXT")
 
     def testTurnAfter3_KO(self):
         lexer = ChessLexer()
@@ -178,7 +176,7 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(result)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertEqual(token.type, "TEXT")
 
 
     #_______________Tests token CHECK_______________
@@ -300,7 +298,7 @@ class TestLexer(unittest.TestCase):
         lexer.raw_input(grade)
         token = lexer.token()
 
-        self.assertIsNone(token)
+        self.assertEqual(token.type, "TEXT")
 
 
 #_______________Tests token CASTLING_______________

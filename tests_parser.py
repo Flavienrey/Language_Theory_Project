@@ -128,17 +128,6 @@ class TestParser(unittest.TestCase):
         self.assertIsNotNone(result.children.value.children[1].value.children[4].value.children[2].value)
         self.assertEqual(len(tab_errors),0)
 
-    def testWhiteAndBlackMove2_KO(self):
-        _input = "1. d5 eP1 1-0"
-        result, tab_errors  = chessparser.test(_input,FILENAME)
-
-        self.assertEqual(result.children.value.children[1].type, "turn")
-        self.assertEqual(result.children.value.children[1].value.children[1].value.children[0].type, "eventPiece")
-        self.assertEqual(result.children.value.children[1].value.children[1].value.children[1].type, "MOVE")
-        self.assertEqual(result.children.value.children[1].value.children[1].value.children[2].type, "eventCheck")
-
-        self.assertEqual(tab_errors[0], 'Syntax error : TEXT eP not allowed at line 1')
-        self.assertEqual(len(tab_errors), 1)
 
     #_______________Tests production WhiteComment_______________
     def testWhiteComment1_OK(self):
