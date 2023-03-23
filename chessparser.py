@@ -19,6 +19,17 @@ def get_elem_in_slice(p, index):
         return p.slice[index]
     return None
 
+def check_if_missing_turns_after_file():
+
+    global  turnIndex, syntactic_error
+
+    if None != turnIndex >= 1:
+
+        for i in range(1, turnIndex+1):
+            string_error = "Turn " + str(i) + " missing"
+            tab_errors.append(string_error)
+
+        syntactic_error = True
 
 def p_start(p):
     '''start : game'''
@@ -66,6 +77,8 @@ def p_turn(p):
         turnIndex -= 1
 
     else:
+        check_if_missing_turns_after_file()
+
         turnIndex = None
 
 
@@ -106,14 +119,17 @@ def p_white_comment(p):
                     | empty'''
 
     # check if opening == closing
-    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2)])
+    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
+                 get_elem_in_slice(p, 5), get_elem_in_slice(p, 6)])
 
 
 def p_simple_comment(p):
     '''simpleComment : openingCharacter eventData simpleComment eventData closingCharacter
                      | empty'''
     # check if opening == closing
-    p[0] = Node(get_elem_in_slice(p, 1))
+    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
+                 get_elem_in_slice(p, 5)])
+
 
 def p_event_data(p):
     '''eventData : TURN_NUMBER_WITH_DOT eventData
@@ -127,14 +143,19 @@ def p_event_data(p):
                  | GRADE eventData
                  | CASTLING eventData
                  | empty'''
+    p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2)])
+
 
 def p_opening_character(p):
     '''openingCharacter : OPENING_PARENTHESIS
                         | OPENING_BRACE'''
+    p[0] = Node(get_elem_in_slice(p, 1))
+
 
 def p_closing_character(p):
     '''closingCharacter : CLOSING_PARENTHESIS
                         | CLOSING_BRACE'''
+    p[0] = Node(get_elem_in_slice(p, 1))
 
 
 # Empty production
@@ -173,6 +194,8 @@ def test(text, filename):
     parser.parse(text, lexer=lexer)
 
     print("[Syntactic analysis started]")
+
+    check_if_missing_turns_after_file()
 
     # Final test to print if an error was found or not
     if syntactic_error:

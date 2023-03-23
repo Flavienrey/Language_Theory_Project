@@ -98,6 +98,17 @@ class TestParser(unittest.TestCase):
         self.assertEqual(tab_errors[0],'Turn 3 missing')
         self.assertEqual(len(tab_errors), 1)
 
+    def testTurn3_KO(self):
+        _input = "3. e5 e5 4. e4 0-1 1. e4 e5 2. e5 e5 4. e4 0-1"
+        result, tab_errors = chessparser.test(_input,FILENAME)
+
+        self.assertEqual(result.children.value.children[1].type, "turn")
+        self.assertIsNotNone(result.children.value.children[1].value)
+        self.assertEqual(tab_errors[0], 'Turn 1 missing')
+        self.assertEqual(tab_errors[1], 'Turn 2 missing')
+        self.assertEqual(tab_errors[2], 'Turn 3 missing')
+        self.assertEqual(len(tab_errors), 3)
+
     #_______________Tests production WhiteAnBlackMove_______________
     def testWhiteAndBlackMove1_OK(self):
         _input = "1. d5 Pe1 1-0"
