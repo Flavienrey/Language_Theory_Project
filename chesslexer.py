@@ -78,7 +78,7 @@ class ChessLexer(object):
             print("\n!!! [List of errors] !!!")
 
             for error in self.tab_errors:
-                print('\033[91m'+error+'\033[0m')
+                print('\033[91m' + error + '\033[0m')
 
             print("[Error during the lexical analysis]\n")
 
