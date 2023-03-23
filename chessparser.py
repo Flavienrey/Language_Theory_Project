@@ -20,9 +20,9 @@ def get_elem_in_slice(p, index):
         return p.slice[index]
     return None
 
-def check_if_missing_turns_after_file():
 
-    global  turnIndex, syntactic_error
+def check_if_missing_turns_after_file():
+    global turnIndex, syntactic_error
 
     if None != turnIndex >= 1:
 
@@ -31,6 +31,8 @@ def check_if_missing_turns_after_file():
             tab_errors.append(string_error)
 
         syntactic_error = True
+        turnIndex = None
+
 
 def p_start(p):
     '''start : game'''
@@ -55,31 +57,41 @@ def p_turn(p):
     '''turn : empty
             | TURN_NUMBER_WITH_DOT whiteMove eventGrade whiteComment blackMove eventGrade simpleComment  turn'''
 
+    p[0] = Node(
+        [get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
+         get_elem_in_slice(p, 5), get_elem_in_slice(p, 6), get_elem_in_slice(p, 7), get_elem_in_slice(p, 8)])
+
     global turnIndex, tab_errors, syntactic_error
 
+    # We get the current TURN_NUMBER_WITH_DOT
     current_turn = get_elem_in_slice(p, 1)
 
+    # If the TURN_NUMBER_WITH_DOT is present
     if current_turn.value is not None:
 
+        # If we didn't start to count yet, we initialize our counter
         if turnIndex is None:
             turnIndex = int(current_turn.value.split('.')[0])
 
-        if current_turn.value != str(turnIndex) + '.':
-            string_error = "Turn " + str(turnIndex) + " missing"
-            tab_errors.append(string_error)
-            syntactic_error = True
-            turnIndex -= 1
+        for _ in range(turnIndex,-1, -1):
 
-        else:
-            p[0] = Node(
-                [get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
-                 get_elem_in_slice(p, 5), get_elem_in_slice(p, 6), get_elem_in_slice(p, 7), get_elem_in_slice(p, 8)])
+            # If expected turn is different from what we got, we raise an error and decrease to the next turn
+            if current_turn.value != str(turnIndex) + '.':
 
+                string_error = "Turn " + str(turnIndex) + " missing"
+                tab_errors.append(string_error)
+                syntactic_error = True
+                turnIndex -= 1
+
+            # Now equal to our turn, we break
+            else:
+                break
+
+        # We decrement our index to check the next one next time
         turnIndex -= 1
 
     else:
         check_if_missing_turns_after_file()
-
         turnIndex = None
 
 
@@ -119,7 +131,6 @@ def p_white_comment(p):
     '''whiteComment : openingCharacter eventData simpleComment eventData closingCharacter TURN_AFTER_COMMENT
                     | empty'''
 
-    # check if opening == closing
     p[0] = Node([get_elem_in_slice(p, 1), get_elem_in_slice(p, 2), get_elem_in_slice(p, 3), get_elem_in_slice(p, 4),
                  get_elem_in_slice(p, 5), get_elem_in_slice(p, 6)])
 
@@ -206,7 +217,7 @@ def test(text, filename):
         for error in tab_errors:
             print(Colors.FAIL + error + Colors.ENDC)
 
-        print(Colors.WARNING  + "[Error during the syntactic analysis]" + Colors.ENDC + "\n")
+        print(Colors.WARNING + "[Error during the syntactic analysis]" + Colors.ENDC + "\n")
 
     else:
         print(Colors.OKGREEN + "[Correct syntactic analysis]" + Colors.ENDC)

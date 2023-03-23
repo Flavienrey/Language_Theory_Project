@@ -3,10 +3,11 @@ import chessparser
 
 tokens = ['TURN_NUMBER_WITH_DOT', 'TURN_AFTER_COMMENT', 'PIECE', 'MOVE', 'RESULT', 'COMMENT', 'CHECK', 'CHECKMATE',
                        'DESCRIPTION', 'GRADE', 'CASTLING']
+
 FILENAME = "Unit tests parser"
+
 """ Unit tests class"""
 class TestParser(unittest.TestCase):
-    #TODO: TU
     #Game               : OK
     #EventDescriptor    : OK
     #Turn               : NOT OK => correction pour le comptage des tours
@@ -127,7 +128,7 @@ class TestParser(unittest.TestCase):
         self.assertIsNotNone(result.children.value.children[1].value.children[4].value.children[2].value)
         self.assertEqual(len(tab_errors),0)
 
-    def testWhiteAndBlackMove2_KO(self): #TODO: A REVOIR
+    def testWhiteAndBlackMove2_KO(self):
         _input = "1. d5 eP1 1-0"
         result, tab_errors  = chessparser.test(_input,FILENAME)
 
@@ -136,7 +137,7 @@ class TestParser(unittest.TestCase):
         self.assertEqual(result.children.value.children[1].value.children[1].value.children[1].type, "MOVE")
         self.assertEqual(result.children.value.children[1].value.children[1].value.children[2].type, "eventCheck")
 
-        self.assertEqual(tab_errors[0], 'Syntax error : TEXT, eP at line 1')
+        self.assertEqual(tab_errors[0], 'Syntax error : TEXT eP not allowed at line 1')
         self.assertEqual(len(tab_errors), 1)
 
     #_______________Tests production WhiteComment_______________
